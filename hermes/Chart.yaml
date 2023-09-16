@@ -1,0 +1,4 @@
+apiVersion: v2
+description: Hermes Infrastructure
+name: hermes
+version: 0.0.1
