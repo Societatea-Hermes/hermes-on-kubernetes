@@ -1,0 +1,12 @@
+apiVersion: extensions/v1
+kind: Ingress
+metadata:
+  name: test-ingress
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /
+          backend:
+            serviceName: test-service
+            servicePort: 5678
