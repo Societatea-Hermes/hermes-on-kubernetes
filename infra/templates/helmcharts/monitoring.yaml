@@ -23,8 +23,8 @@ spec:
         kind: HelmRepository
         name: kube-prometheus-stack
         namespace: flux-system
+      reconcileStrategy: Revision
   targetNamespace: monitoring
-  reconcileStrategy: Revision
   upgrade:
     remediation:
       retries: 1

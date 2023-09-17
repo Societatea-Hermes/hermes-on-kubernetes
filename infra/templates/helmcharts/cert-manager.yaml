@@ -23,8 +23,8 @@ spec:
         kind: HelmRepository
         name: cert-manager
         namespace: flux-system
+      reconcileStrategy: Revision
   targetNamespace: cert-manager
-  reconcileStrategy: Revision
   upgrade:
     remediation:
       retries: 1
