@@ -6,7 +6,8 @@ metadata:
   namespace: monitoring
 spec:
   rules:
-  - http:
+  - host: toliveistolearn.com
+    http:
       paths:
         - path: /prometheus
           pathType: ImplementationSpecific
@@ -19,9 +20,9 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: monitoring-prometheus
+              name: monitoring-alertmanager
               port:
-                number: 9090 
+                number: 9093 
         - path: /grafana
           pathType: ImplementationSpecific
           backend:
