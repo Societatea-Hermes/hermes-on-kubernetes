@@ -1,3 +1,4 @@
 monitoring:
   enabled: true
-
+cert-manager:
+  enabled: true
