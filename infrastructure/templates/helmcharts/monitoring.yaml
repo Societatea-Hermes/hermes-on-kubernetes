@@ -24,6 +24,10 @@ spec:
         name: kube-prometheus-stack
         namespace: flux-system
   targetNamespace: monitoring
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: rollback 
   dependsOn:
     - name: cert-manager
 # values.yaml

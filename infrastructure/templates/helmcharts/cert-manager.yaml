@@ -24,6 +24,10 @@ spec:
         name: cert-manager
         namespace: flux-system
   targetNamespace: cert-manager
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: rollback 
 # values.yaml
   values:
     installCRDs: true

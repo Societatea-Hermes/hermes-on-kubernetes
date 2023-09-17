@@ -27,5 +27,9 @@ spec:
         kind: GitRepository
         name: flux-system
         namespace: flux-system
+  upgrade:
+    remediation:
+      retries: 1
+      strategy: rollback 
   dependsOn:
     - name: infrastructure
