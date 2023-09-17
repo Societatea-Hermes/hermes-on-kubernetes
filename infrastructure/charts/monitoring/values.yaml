@@ -1,0 +1,56 @@
+enabled: true
+ingress:
+  enabled: true
+kube-prometheus-stack:
+  fullnameOverride: monitoring
+  namespaceOverride: monitoring
+  alertmanager:
+    config:
+      route:
+        routes:
+          - receiver: 'null'
+            matchers:
+              - alertname =~ "InfoInhibitor|Watchdog"
+      receivers:
+        - name: 'null'
+      externalUrl: 
+  grafana:
+    grafana.ini:
+  kubernetesServiceMonitors:
+    enabled: true
+  kubeApiServer:
+    enabled: true
+  kubelet:
+    enabled: true
+  kubeControllerManager:
+    enabled: true
+  coreDns:
+    enabled: true
+  kubeDns:
+    enabled: false
+  kubeEtcd:
+    enabled: true
+  kubeScheduler:
+    enabled: true
+  kubeProxy:
+    enabled: true
+  kubeStateMetrics:
+    enabled: true
+  kube-state-metrics:
+  nodeExporter:
+    enabled: true
+  prometheus-node-exporter:
+  prometheusOperator:
+    enabled: true
+  prometheus:
+    enabled: true
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: local-path
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 4Gi
+  

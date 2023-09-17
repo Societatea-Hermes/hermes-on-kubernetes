@@ -1,0 +1,31 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: infrastructure
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: infrastructure
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: apps
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  chart:
+    spec:
+      chart: apps
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  dependsOn:
+    - name: infrastructure
