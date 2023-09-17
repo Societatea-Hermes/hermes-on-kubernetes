@@ -1,13 +1,13 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: infrastructure
+  name: infra
   namespace: flux-system
 spec:
   interval: 1m0s
   chart:
     spec:
-      chart: infrastructure
+      chart: infra
       sourceRef:
         kind: GitRepository
         name: flux-system
@@ -36,4 +36,4 @@ spec:
       retries: 1
       strategy: rollback 
   dependsOn:
-    - name: infrastructure
+    - name: infra

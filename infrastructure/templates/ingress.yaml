@@ -1,0 +1,29 @@
+{{- if .Values.monitoring.enabled }}
+apiVersion: extensions/v1
+kind: Ingress
+metadata:
+  name: monitoring-ingress
+  namespace: monitoring
+spec:
+  rules:
+  - http:
+      paths:
+        - path: /prometheus
+          backend:
+            service:
+              name: monitoring-prometheus
+              port:
+                number: 9090
+        - path: /alertmanager
+          backend:
+            service:
+              name: monitoring-prometheus
+              port:
+                number: 9090 
+        - path: /grafana
+          backend:
+            service:
+              name: monitoring-kube-prometheus-stack-grafana
+              port:
+                number: 80
+{{- end }}
