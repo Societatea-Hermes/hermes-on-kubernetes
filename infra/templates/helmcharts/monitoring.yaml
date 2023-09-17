@@ -24,6 +24,9 @@ spec:
         name: kube-prometheus-stack
         namespace: flux-system
   targetNamespace: monitoring
+  install:
+    remediation:
+      retries: 1
   upgrade:
     remediation:
       retries: 1

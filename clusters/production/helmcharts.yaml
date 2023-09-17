@@ -12,6 +12,9 @@ spec:
         kind: GitRepository
         name: flux-system
         namespace: flux-system
+  install:
+    remediation:
+      retries: 1
   upgrade:
     remediation:
       retries: 1
@@ -31,6 +34,9 @@ spec:
         kind: GitRepository
         name: flux-system
         namespace: flux-system
+  install:
+    remediation:
+      retries: 1
   upgrade:
     remediation:
       retries: 1

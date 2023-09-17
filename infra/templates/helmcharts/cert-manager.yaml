@@ -24,6 +24,9 @@ spec:
         name: cert-manager
         namespace: flux-system
   targetNamespace: cert-manager
+  install:
+    remediation:
+      retries: 1
   upgrade:
     remediation:
       retries: 1
