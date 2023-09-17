@@ -26,10 +26,10 @@ spec:
   targetNamespace: monitoring
   install:
     remediation:
-      retries: 1
+      retries: -1
   upgrade:
     remediation:
-      retries: 1
+      retries: -1
       strategy: rollback 
   dependsOn:
     - name: cert-manager
