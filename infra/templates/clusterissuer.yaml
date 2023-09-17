@@ -6,7 +6,7 @@ metadata:
 spec:
   acme:
     email: admin@societatea-hermes.ro
-    server: https://acme-production-v02.api.letsencrypt.org/directory
+    server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-production-account-key
     solvers:
