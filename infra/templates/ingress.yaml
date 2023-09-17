@@ -4,6 +4,8 @@ kind: Ingress
 metadata:
   name: monitoring-ingress
   namespace: monitoring
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
 spec:
   tls:
   - secretName: tls-monitoring
