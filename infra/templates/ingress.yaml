@@ -5,6 +5,8 @@ metadata:
   name: monitoring-ingress
   namespace: monitoring
 spec:
+  tls:
+  - secretName: tls-monitoring
   rules:
   - host: toliveistolearn.com
     http:
