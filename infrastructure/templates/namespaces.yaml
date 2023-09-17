@@ -10,7 +10,7 @@ metadata:
   name: monitoring
 ---
 {{- end }}
-{{- if .Values.cert-manager.enabled }}
+{{- if .Values.certManager.enabled }}
 apiVersion: v1
 kind: Namespace
 metadata:

@@ -1,4 +1,4 @@
 monitoring:
   enabled: true
-cert-manager:
+certManager:
   enabled: true
