@@ -7,7 +7,7 @@ spec:
   secretName: tls-monitoring
   renewBefore: 360h0m0s # 15d
   dnsNames:
-  - toliveistolearn.com
+  - *.toliveistolearn.com
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer

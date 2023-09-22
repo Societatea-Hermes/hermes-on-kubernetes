@@ -43,11 +43,11 @@ spec:
                 - alertname =~ "InfoInhibitor|Watchdog"
         receivers:
           - name: 'null'
-        externalUrl: http://toliveistolearn.com/alertmanager
+        externalUrl: http://alertmanager.toliveistolearn.com/
     grafana:
       grafana.ini:
         server:
-          root_url: http://toliveistolearn.com/grafana
+          root_url: http://grafana.toliveistolearn.com/
     kubernetesServiceMonitors:
       enabled: true
     kubeApiServer:
@@ -77,7 +77,7 @@ spec:
     prometheus:
       enabled: true
       prometheusSpec:
-        externalUrl: https://toliveistolearn.com/prometheus
+        externalUrl: https://prometheus.toliveistolearn.com/
       storageSpec:
         volumeClaimTemplate:
           spec:
