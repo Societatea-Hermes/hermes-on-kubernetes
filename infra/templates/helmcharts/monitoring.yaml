@@ -78,6 +78,15 @@ spec:
       enabled: true
       prometheusSpec:
         externalUrl: https://prometheus.toliveistolearn.com/
+        serviceMonitorNamespaceSelector:
+          matchLabels:
+            monitoring: prometheus
+        podMonitorNamespaceSelector:
+          matchLabels:
+            monitoring: prometheus
+        ruleNamespaceSelector:
+          matchLabels:
+            monitoring: prometheus
       storageSpec:
         volumeClaimTemplate:
           spec:
