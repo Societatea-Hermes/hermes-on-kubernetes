@@ -55,15 +55,15 @@ spec:
     kubelet:
       enabled: true
     kubeControllerManager:
-      enabled: true
+      enabled: false
     coreDns:
       enabled: true
     kubeDns:
       enabled: false
     kubeEtcd:
-      enabled: true
+      enabled: false
     kubeScheduler:
-      enabled: true
+      enabled: false
     kubeProxy:
       enabled: true
     kubeStateMetrics:
