@@ -30,7 +30,7 @@ spec:
               name: monitoring-alertmanager
               port:
                 number: 9093
-  - host:
+  - host: grafana.toliveistolearn.com
     http:
       paths: 
         - path: /

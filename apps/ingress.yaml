@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress
+  namespace: apps
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web
+spec:
+  tls:
+  - secretName: tls-apps
+  rules:
+  - host: toliveistolearn.com
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: main-website
+              port:
+                number: 80

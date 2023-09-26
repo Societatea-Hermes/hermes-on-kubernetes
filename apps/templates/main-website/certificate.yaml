@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: apps-certificate
+  namespace: apps
+spec:
+  secretName: tls-apps
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
+  - toliveistolearn.com
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
