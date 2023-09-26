@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: main-website
+  namespace: apps
   labels:
     app.kubernetes.io/name: main-website
 spec:
