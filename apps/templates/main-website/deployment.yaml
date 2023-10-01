@@ -17,6 +17,6 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: ghcr.io/societatea-hermes/hermes-main-website:5
+          image: ghcr.io/societatea-hermes/hermes-main-website:6
           ports:
             - containerPort: 80
