@@ -8,7 +8,7 @@ spec:
   renewBefore: 360h0m0s # 15d
   dnsNames:
   - toliveistolearn.com
-  - societatea-hermes.ro
+  # - societatea-hermes.ro
   - societateahermes.ro
   issuerRef:
     name: letsencrypt-production
