@@ -31,4 +31,14 @@ spec:
               name: main-website
               port:
                 number: 80
+  - host: societateahermes.ro
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: main-website
+              port:
+                number: 80
   
