@@ -11,8 +11,6 @@ spec:
   tls:
   - secretName: tls-apps
     hosts:
-      - societateahermes.ro
-      # - societatea-hermes.ro
       - toliveistolearn.com
   rules:
   - host: toliveistolearn.com
@@ -25,16 +23,48 @@ spec:
               name: main-website
               port:
                 number: 80
-  # - host: societatea-hermes.ro
-  #   http:
-  #     paths:
-  #       - path: /
-  #         pathType: ImplementationSpecific
-  #         backend:
-  #           service:
-  #             name: main-website
-  #             port:
-  #               number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress-1
+  namespace: apps
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - secretName: tls-apps
+    hosts:
+      - societatea-hermes.ro
+  rules:
+  - host: societatea-hermes.ro
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: main-website
+              port:
+                number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress-2
+  namespace: apps
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - secretName: tls-apps
+    hosts:
+      - societateahermes.ro
+  rules:
   - host: societateahermes.ro
     http:
       paths:
@@ -45,4 +75,3 @@ spec:
               name: main-website
               port:
                 number: 80
-  
