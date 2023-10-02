@@ -10,6 +10,10 @@ metadata:
 spec:
   tls:
   - secretName: tls-apps
+    hosts:
+      - societateahermes.ro
+      - societatea-hermes.ro
+      - toliveistolearn.com
   rules:
   - host: toliveistolearn.com
     http:
