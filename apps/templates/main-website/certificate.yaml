@@ -9,6 +9,7 @@ spec:
   dnsNames:
   - toliveistolearn.com
   - societatea-hermes.ro
+  - www.societatea-hermes.ro
   - societateahermes.ro
   issuerRef:
     name: letsencrypt-production
