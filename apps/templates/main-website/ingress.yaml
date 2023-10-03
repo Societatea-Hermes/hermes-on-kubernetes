@@ -11,12 +11,11 @@ spec:
   tls:
   - secretName: tls-apps
     hosts:
-      - societateahermes.ro
-      - societatea-hermes.ro
-      - www.societatea-hermes.ro
-      - toliveistolearn.com
+      - "societateahermes.ro"
+      - "societatea-hermes.ro"
+      - "toliveistolearn.com"
   rules:
-  - host: toliveistolearn.com
+  - host: "toliveistolearn.com"
     http:
       paths:
         - path: /
@@ -26,7 +25,7 @@ spec:
               name: main-website
               port:
                 number: 80
-  - host: societatea-hermes.ro
+  - host: "societatea-hermes.ro"
     http:
       paths:
         - path: /
@@ -36,17 +35,7 @@ spec:
               name: main-website
               port:
                 number: 80
-  - host: societateahermes.ro
-    http:
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: main-website
-              port:
-                number: 80
-  - host: www.societateahermes.ro
+  - host: "societateahermes.ro"
     http:
       paths:
         - path: /

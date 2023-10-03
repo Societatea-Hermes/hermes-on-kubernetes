@@ -7,10 +7,9 @@ spec:
   secretName: tls-apps
   renewBefore: 360h0m0s # 15d
   dnsNames:
-  - toliveistolearn.com
-  - societatea-hermes.ro
-  - www.societatea-hermes.ro
-  - societateahermes.ro
+  - "toliveistolearn.com"
+  - "societatea-hermes.ro"
+  - "societateahermes.ro"
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
