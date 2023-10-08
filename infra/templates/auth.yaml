@@ -5,7 +5,7 @@ metadata:
   namespace: auth
 spec:
   routes:
-    - match: "Host(`auth.toliveistolearn.com`)" && PathPrefix(`/oauth2`)"
+    - match: "Host(`auth.toliveistolearn.com`) && PathPrefix(`/oauth2`)"
       kind: Rule
       services:
         - name: oauth2-proxy
