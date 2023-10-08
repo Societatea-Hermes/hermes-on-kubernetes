@@ -1,20 +1,4 @@
 apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: traefik-ingress
-  namespace: auth
-spec:
-  routes:
-    - match: "Host(`auth.toliveistolearn.com`)"
-      kind: Rule
-      services:
-        - name: oauth2-proxy
-          namespace: auth
-          port: 4180
-      middlewares:
-        - name: oauth-errors
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: oauth-errors
@@ -83,7 +67,6 @@ spec:
         - --http-address=0.0.0.0:4180
         - --upstream=file:///dev/null
         - --pass-user-headers=true
-        - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --set-authorization-header=true
         - --set-xauthrequest=true
         - --reverse-proxy=true
