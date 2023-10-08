@@ -5,7 +5,7 @@ metadata:
   namespace: auth
 spec:
   routes:
-    - match: "Host(`auth.toliveistolearn.com`)"
+    - match: "Host(`auth.toliveistolearn.com`)" && PathPrefix(`/oauth2`)"
       kind: Rule
       services:
         - name: oauth2-proxy
@@ -13,7 +13,6 @@ spec:
           port: 4180
       middlewares:
         - name: oauth-errors
-        - name: oauth2-proxy
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -36,7 +35,7 @@ metadata:
   namespace: auth
 spec:
   forwardAuth:
-    address: http://oauth2-proxy.auth.svc:4180/oauth2/auth
+    address: http://auth.toliveistolearn.com/oauth2/auth
     trustForwardHeader: true
     authResponseHeaders:
       - X-Auth-Request-User

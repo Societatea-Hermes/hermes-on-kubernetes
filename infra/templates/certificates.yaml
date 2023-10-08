@@ -10,6 +10,7 @@ spec:
   - prometheus.toliveistolearn.com
   - alertmanager.toliveistolearn.com
   - grafana.toliveistolearn.com
+  - auth.toliveistolearn.com
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
