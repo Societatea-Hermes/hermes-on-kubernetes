@@ -36,7 +36,7 @@ metadata:
   namespace: auth
 spec:
   forwardAuth:
-    address: http://auth.toliveistolearn.com/oauth2/auth
+    address: https://auth.toliveistolearn.com/oauth2/auth
     trustForwardHeader: true
     authResponseHeaders:
       - X-Auth-Request-User
