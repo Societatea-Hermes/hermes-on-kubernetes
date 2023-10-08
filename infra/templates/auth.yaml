@@ -83,7 +83,6 @@ spec:
         - --http-address=0.0.0.0:4180
         - --upstream=file:///dev/null
         - --pass-user-headers=true
-        - --redirect-url=auth.toliveistolearn.com/oauth2/callback
         - --set-authorization-header=true
         - --set-xauthrequest=true
         - --reverse-proxy=true
