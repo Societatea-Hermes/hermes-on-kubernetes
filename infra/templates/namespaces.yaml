@@ -23,3 +23,10 @@ metadata:
     monitoring: prometheus
 ---
 {{- end }}
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth
+  labels:
+    monitoring: prometheus
+---

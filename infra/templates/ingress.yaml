@@ -32,14 +32,14 @@ spec:
               name: monitoring-alertmanager
               port:
                 number: 9093
-  - host: grafana.toliveistolearn.com
-    http:
-      paths: 
-        - path: /
-          pathType: ImplementationSpecific
-          backend:
-            service:
-              name: monitoring-kube-prometheus-stack-grafana
-              port:
-                number: 80
+  # - host: grafana.toliveistolearn.com
+  #   http:
+  #     paths: 
+  #       - path: /
+  #         pathType: ImplementationSpecific
+  #         backend:
+  #           service:
+  #             name: monitoring-kube-prometheus-stack-grafana
+  #             port:
+  #               number: 80
 {{- end }}
