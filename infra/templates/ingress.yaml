@@ -7,6 +7,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
     traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.middlewares: auth-oauth-errors@kubernetescrd, auth-oauth2-proxys@kubernetescrd
     ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   tls:
@@ -32,14 +33,14 @@ spec:
               name: monitoring-alertmanager
               port:
                 number: 9093
-  # - host: grafana.toliveistolearn.com
-  #   http:
-  #     paths: 
-  #       - path: /
-  #         pathType: ImplementationSpecific
-  #         backend:
-  #           service:
-  #             name: monitoring-kube-prometheus-stack-grafana
-  #             port:
-  #               number: 80
+  - host: grafana.toliveistolearn.com
+    http:
+      paths: 
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: monitoring-kube-prometheus-stack-grafana
+              port:
+                number: 80
 {{- end }}

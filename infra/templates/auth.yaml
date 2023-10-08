@@ -5,7 +5,7 @@ metadata:
   namespace: auth
 spec:
   routes:
-    - match: "Host(`grafana.toliveistolearn.com`) && PathPrefix(`/oauth2`)"
+    - match: "Host(`auth.toliveistolearn.com`)"
       kind: Rule
       services:
         - name: oauth2-proxy
@@ -13,14 +13,7 @@ spec:
           port: 4180
       middlewares:
         - name: oauth-errors
-    - match: Host(`grafana.toliveistolearn.com`)
-      kind: Rule
-      middlewares:
-        - name: oauth-errors
         - name: oauth2-proxy
-      services:
-        - name: monitoring-kube-prometheus-stack-grafana
-          port: 80
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
@@ -87,7 +80,6 @@ spec:
       - args:
         - --provider=google
         - --email-domain="societatea-hermes.ro"
-        - --redirect-url=auth.toliveistolearn.com/oauth2
         - --http-address=0.0.0.0:4180
         - --pass-user-headers=true
         - --set-authorization-header=true
