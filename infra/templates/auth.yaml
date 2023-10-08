@@ -36,7 +36,7 @@ metadata:
   namespace: auth
 spec:
   forwardAuth:
-    address: http://auth.toliveistolearn.com/oauth2/auth
+    address: http://oauth2-proxy.auth.svc:4180/oauth2/auth
     trustForwardHeader: true
     authResponseHeaders:
       - X-Auth-Request-User
@@ -83,6 +83,7 @@ spec:
         - --http-address=0.0.0.0:4180
         - --upstream=file:///dev/null
         - --pass-user-headers=true
+        - --redirect-url="https://auth.toliveistolearn.com/oauth2/callback"
         - --set-authorization-header=true
         - --set-xauthrequest=true
         - --reverse-proxy=true
