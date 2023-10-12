@@ -10,6 +10,19 @@ spec:
   - prometheus.toliveistolearn.com
   - alertmanager.toliveistolearn.com
   - grafana.toliveistolearn.com
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: auth-certificate
+  namespace: auth
+spec:
+  secretName: tls-auth
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
   - auth.toliveistolearn.com
   issuerRef:
     name: letsencrypt-production
