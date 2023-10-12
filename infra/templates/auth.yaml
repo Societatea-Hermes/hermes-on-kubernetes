@@ -91,6 +91,7 @@ spec:
         - --http-address=0.0.0.0:4180
         - --upstream=static://202
         - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
+        - --whitelist-domain=.toliveistolearn.com
         - --pass-user-headers=true
         - --skip-provider-button=true
         - --set-authorization-header=true
