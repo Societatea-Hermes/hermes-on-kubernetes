@@ -90,7 +90,8 @@ spec:
         - --email-domain="societatea-hermes.ro"
         - --http-address=0.0.0.0:4180
         - --upstream=static://202
-        # - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
+        - --scope=openid profile email groups
+        - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --whitelist-domain=.toliveistolearn.com
         - --pass-user-headers=true
         - --skip-provider-button=true
