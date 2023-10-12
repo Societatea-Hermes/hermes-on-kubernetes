@@ -66,6 +66,7 @@ spec:
         - --email-domain="societatea-hermes.ro"
         - --http-address=0.0.0.0:4180
         - --upstream=static://202
+        - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --pass-user-headers=true
         - --skip-provider-button=true
         - --set-authorization-header=true
