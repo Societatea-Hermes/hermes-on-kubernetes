@@ -94,6 +94,7 @@ spec:
         - --pass-user-headers=true
         - --skip-provider-button=true
         - --set-authorization-header=true
+        - --cookie-domain=.toliveistolearn.com
         - --set-xauthrequest=true
         - --reverse-proxy=true
         env:
