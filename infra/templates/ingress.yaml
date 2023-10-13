@@ -40,7 +40,7 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: monitoring-kube-prometheus-stack-grafana
+              name: http-echo
               port:
-                number: 80
+                number: 8080
 {{- end }}

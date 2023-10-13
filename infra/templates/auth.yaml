@@ -56,7 +56,7 @@ metadata:
   labels:
     app: oauth2-proxy
   name: oauth2-proxy
-  namespace: auth
+  namespace: monitoring
 spec:
   type: ClusterIP
   ports:
@@ -66,6 +66,48 @@ spec:
     targetPort: 4180
   selector:
     app.kubernetes.io/name: oauth2-proxy
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: http-echo
+  name: http-echo
+  namespace: monitoring
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: http-echo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: http-echo
+  name: http-echo
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: http-echo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: http-echo
+    spec:
+      containers:
+      - image: mendhak/http-https-echo
+        imagePullPolicy: Always
+        name: http-echo
+        ports:
+        - containerPort: 8080
+          protocol: TCP
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -90,7 +132,7 @@ spec:
         - --email-domain="societatea-hermes.ro"
         - --http-address=0.0.0.0:4180
         - --upstream=static://202
-        - --scope=openid profile email groups
+        - --scope=openid profile email
         - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --whitelist-domain=.toliveistolearn.com
         - --pass-user-headers=true
