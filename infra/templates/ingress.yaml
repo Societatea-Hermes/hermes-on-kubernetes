@@ -30,9 +30,9 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: monitoring-alertmanager
+              name: http-echo
               port:
-                number: 9093
+                number: 8080
   - host: grafana.toliveistolearn.com
     http:
       paths: 
@@ -40,7 +40,7 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: http-echo
+              name: monitoring-kube-prometheus-stack-grafana
               port:
-                number: 8080
+                number: 80
 {{- end }}
