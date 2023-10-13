@@ -142,7 +142,8 @@ spec:
         - --set-xauthrequest=true
         - --reverse-proxy=true
         - --set-xauthrequest=true
-        - --pass-user-headers=true
+        - --pass-host-header=true
+        - --prefer-email-to-user=true
         env:
           - name: OAUTH2_PROXY_CLIENT_ID
             valueFrom:
