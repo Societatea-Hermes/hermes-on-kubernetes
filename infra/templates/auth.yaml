@@ -132,8 +132,6 @@ spec:
         - --email-domain="societatea-hermes.ro"
         - --http-address=0.0.0.0:4180
         - --upstream=static://202
-        - --upstream=http://127.0.0.1:4180/
-        - --scope=openid profile email
         - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --whitelist-domain=.toliveistolearn.com
         - --pass-user-headers=true
@@ -145,6 +143,7 @@ spec:
         - --set-xauthrequest=true
         - --pass-host-header=true
         - --prefer-email-to-user=true
+        - --pass-access-token=true
         env:
           - name: OAUTH2_PROXY_CLIENT_ID
             valueFrom:
