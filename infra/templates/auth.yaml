@@ -131,7 +131,8 @@ spec:
         - --provider=google
         - --email-domain="societatea-hermes.ro"
         - --http-address=0.0.0.0:4180
-        - --upstream=http://http-echo.auth.svc:8080
+        - --upstream=static://202
+        - --upstream=http://127.0.0.1:4180/
         - --scope=openid profile email
         - --redirect-url=https://auth.toliveistolearn.com/oauth2/callback
         - --whitelist-domain=.toliveistolearn.com
