@@ -46,11 +46,12 @@ spec:
   forwardAuth:
     address: http://oauth2-proxy.auth.svc:4180/
     trustForwardHeader: true
-    authResponseHeaders:
-      - X-Auth-Request-Email
-      - X-Auth-Request-Access-Token
-      - Authorization
-      - Set-Cookie
+    authResponseHeadersRegex: .*
+    # authResponseHeaders:
+      # - X-Auth-Request-Email
+      # - X-Auth-Request-Access-Token
+      # - Authorization
+      # - Set-Cookie
 ---
 apiVersion: v1
 kind: Service
