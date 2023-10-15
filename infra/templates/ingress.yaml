@@ -53,7 +53,7 @@ spec:
     - name: monitoring-prometheus
       port: 9090
     middlewares:
-      - name: oauth-erorrs
+      - name: oauth-errors
         namespace: auth
       - name: oauth2-proxy
         namespace: auth
@@ -64,7 +64,7 @@ spec:
     - name: monitoring-prometheus
       port: 9090
     middlewares:
-      - name: oauth-erorrs
+      - name: oauth-errors
         namespace: auth
       - name: oauth2-proxy
         namespace: auth
