@@ -39,6 +39,7 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
   name: prometheus-ingress
+  namespace: monitoring
 spec:
   tls:
     secretname: tls-monitoring
