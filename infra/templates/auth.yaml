@@ -46,9 +46,7 @@ spec:
   forwardAuth:
     address: http://oauth2-proxy.auth.svc:4180/
     trustForwardHeader: true
-    authResponseHeaders:
-      - X-Auth-Request-User
-      - Set-Cookie
+    authResponseHeadersRegex: ^.*
 ---
 apiVersion: v1
 kind: Service
@@ -140,7 +138,6 @@ spec:
         - --cookie-domain=.toliveistolearn.com
         - --set-xauthrequest=true
         - --reverse-proxy=true
-        - --set-xauthrequest=true
         - --pass-host-header=true
         - --prefer-email-to-user=true
         - --pass-access-token=true
