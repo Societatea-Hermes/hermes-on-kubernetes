@@ -38,26 +38,20 @@ spec:
     kind: Rule
     # (optional) Priority disambiguates rules of the same length, for route matching.
     services:
-    - name: monitoring-prometheus
-      namespace: monitoring
+    - name: monitoring-prometheus.monitoring.svc.cluster.local
       port: 9090
     middlewares:
       - name: oauth-errors
-        namespace: auth
       - name: oauth2-proxy
-        namespace: auth
   - match: Host(`prometheus.toliveistolearn.com`) && ( Headers(`X-Auth-Request-Email`, 'admin@societatea-hermes.ro'))
     kind: Rule
     # (optional) Priority disambiguates rules of the same length, for route matching.
     services:
-    - name: monitoring-prometheus
-      namespace: monitoring
+    - name: monitoring-prometheus.monitoring.svc.cluster.local
       port: 9090
     middlewares:
       - name: oauth-errors
-        namespace: auth
       - name: oauth2-proxy
-        namespace: auth
 ---
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
