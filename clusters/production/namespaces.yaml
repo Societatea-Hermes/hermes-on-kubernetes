@@ -5,7 +5,6 @@ metadata:
   labels:
     monitoring: prometheus
 ---
-{{- if .Values.monitoring.enabled }}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -13,8 +12,6 @@ metadata:
   labels:
     monitoring: prometheus
 ---
-{{- end }}
-{{- if .Values.certManager.enabled }}
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -22,7 +19,6 @@ metadata:
   labels:
     monitoring: prometheus
 ---
-{{- end }}
 apiVersion: v1
 kind: Namespace
 metadata:
