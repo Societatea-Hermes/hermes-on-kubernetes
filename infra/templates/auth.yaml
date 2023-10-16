@@ -23,40 +23,6 @@ spec:
                 number: 4180
 ---
 apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRoute
-metadata:
-  name: prometheus-ingress
-  namespace: monitoring
-spec:
-  tls:
-    secretname: tls-monitoring
-  entryPoints:
-    - websecure
-  routes:
-  - match: Host(`prometheus.toliveistolearn.com`) && ! HeadersRegexp(`X-Auth-Request-Email`, `.*`)
-    kind: Rule
-    # (optional) Priority disambiguates rules of the same length, for route matching.
-    services:
-    - name: monitoring-prometheus
-      port: 9090
-    middlewares:
-      - name: oauth-errors
-        namespace: auth
-      - name: oauth2-proxy
-        namespace: auth
-  - match: Host(`prometheus.toliveistolearn.com`) && ( Headers(`X-Auth-Request-Email`, `admin@societatea-hermes.ro`))
-    kind: Rule
-    # (optional) Priority disambiguates rules of the same length, for route matching.
-    services:
-    - name: monitoring-prometheus
-      port: 9090
-    middlewares:
-      - name: oauth-errors
-        namespace: auth
-      - name: oauth2-proxy
-        namespace: auth
----
-apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: oauth-errors
