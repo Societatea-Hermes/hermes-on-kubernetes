@@ -33,7 +33,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-  - match: Host(`prometheus.toliveistolearn.com`) && ! HeadersRegexp(`X-Auth-Request-Email`, '.*')
+  - match: Host(`prometheus.toliveistolearn.com`) && ! HeadersRegexp(`X-Auth-Request-Email`, `.*`)
     kind: Rule
     # (optional) Priority disambiguates rules of the same length, for route matching.
     services:
@@ -44,7 +44,7 @@ spec:
         namespace: auth
       - name: oauth2-proxy
         namespace: auth
-  - match: Host(`prometheus.toliveistolearn.com`) && ( Headers(`X-Auth-Request-Email`, 'admin@societatea-hermes.ro'))
+  - match: Host(`prometheus.toliveistolearn.com`) && ( Headers(`X-Auth-Request-Email`, `admin@societatea-hermes.ro`))
     kind: Rule
     # (optional) Priority disambiguates rules of the same length, for route matching.
     services:
