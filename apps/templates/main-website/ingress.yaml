@@ -13,6 +13,7 @@ spec:
     hosts:
       - "societateahermes.ro"
       - "societatea-hermes.ro"
+      - "www.societatea-hermes.ro"
       - "toliveistolearn.com"
   rules:
   - host: "toliveistolearn.com"
@@ -26,6 +27,16 @@ spec:
               port:
                 number: 80
   - host: "societatea-hermes.ro"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: main-website
+              port:
+                number: 80
+  - host: "www.societatea-hermes.ro"
     http:
       paths:
         - path: /
