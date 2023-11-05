@@ -1,4 +1,4 @@
 monitoring:
-  enabled: true
+  enabled: false
 certManager:
   enabled: true
