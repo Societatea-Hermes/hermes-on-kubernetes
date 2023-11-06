@@ -25,16 +25,16 @@ spec:
   #             name: old-hackathon-website
   #             port:
   #               number: 8000
-  # - host: "hackathon.societatea-hermes.ro"
-  #   http:
-  #     paths:
-  #       - path: /
-  #         pathType: ImplementationSpecific
-  #         backend:
-  #           service:
-  #             name: old-hackathon-website
-  #             port:
-  #               number: 8000
+  - host: "hackathon.societatea-hermes.ro"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: old-hackathon-website
+              port:
+                number: 8000
   - host: "hackathon.societateahermes.ro"
     http:
       paths:
