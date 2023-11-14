@@ -4,8 +4,7 @@ metadata:
   name: apps-ingress
   namespace: apps
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
-    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.entrypoints: web, websecure
     traefik.ingress.kubernetes.io/router.middlewares: apps-https-redirect@kubernetescrd
     ingress.kubernetes.io/ssl-redirect: "true"
 spec:
