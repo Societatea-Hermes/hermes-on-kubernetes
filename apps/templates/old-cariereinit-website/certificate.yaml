@@ -1,0 +1,15 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cariereinit-certificate
+  namespace: apps
+spec:
+  secretName: tls-cariereinit
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
+  - "cariereinit.toliveistolearn.com"
+  - "cariereinit.societatea-hermes.ro"
+  - "cariereinit.societateahermes.ro"
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
