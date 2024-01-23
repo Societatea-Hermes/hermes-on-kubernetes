@@ -7,7 +7,7 @@ spec:
   secretName: tls-cariereinit
   renewBefore: 360h0m0s # 15d
   dnsNames:
-  - "cariereinit.toliveistolearn.com"
+  - "cariereinit.ro"
   - "cariereinit.societatea-hermes.ro"
   - "cariereinit.societateahermes.ro"
   issuerRef:
