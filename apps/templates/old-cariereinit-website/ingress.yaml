@@ -15,16 +15,16 @@ spec:
       - "cariereinit.societatea-hermes.ro"
       - "cariereinit.ro"
   rules:
-  # - host: "cariereinit.societatea-hermes.ro"
-  #   http:
-  #     paths:
-  #       - path: /
-  #         pathType: ImplementationSpecific
-  #         backend:
-  #           service:
-  #             name: old-cariereinit-website
-  #             port:
-  #               number: 8000
+  - host: "cariereinit.societatea-hermes.ro"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: old-cariereinit-website
+              port:
+                number: 8000
   - host: "cariereinit.societateahermes.ro"
     http:
       paths:
@@ -35,14 +35,14 @@ spec:
               name: old-cariereinit-website
               port:
                 number: 8000
-  # - host: "cariereinit.ro"
-  #   http:
-  #     paths:
-  #       - path: /
-  #         pathType: ImplementationSpecific
-  #         backend:
-  #           service:
-  #             name: old-cariereinit-website
-  #             port:
-  #               number: 8000
+  - host: "cariereinit.ro"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: old-cariereinit-website
+              port:
+                number: 8000
   
