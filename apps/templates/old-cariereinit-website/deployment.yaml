@@ -19,6 +19,6 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: ghcr.io/societatea-hermes/hermes-old-cariereinit-website:3
+          image: ghcr.io/societatea-hermes/hermes-old-cariereinit-website:4
           ports:
             - containerPort: 8000
