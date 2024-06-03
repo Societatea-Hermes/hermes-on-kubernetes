@@ -1,6 +1,6 @@
 monitoring:
   enabled: true
-ingress-nginx:
+ingress_nginx:
   enabled: true
-cert-manager:
+cert_manager:
   enabled: true

@@ -1,11 +1,11 @@
-{{- if .Values.cert-manager.enabled }}
+{{- if .Values.cert_manager.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cert-manager
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
   annotations:
     argocd.argoproj.io/sync-wave: "-99"
 spec:
