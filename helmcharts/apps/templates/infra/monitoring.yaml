@@ -10,7 +10,7 @@ spec:
   destination:
     namespace: monitoring
     server: https://kubernetes.default.svc
-  project: infra
+  project: default #infra
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
