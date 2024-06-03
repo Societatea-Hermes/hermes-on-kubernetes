@@ -1,0 +1,27 @@
+{{- if .Values.cert-manager.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-99"
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+    targetRevision: main
+    path: helmcharts/cert-manager
+    helm:
+      valueFiles: 
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+{{- end}}
