@@ -1,4 +1,5 @@
 ingress-nginx:
   controller:
     service:
-      type: NodePort
+      externalIPs:
+        - 20.244.86.84

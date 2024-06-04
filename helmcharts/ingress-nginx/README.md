@@ -1,0 +1,1 @@
+`ingress-nginx.controller.service.externalIPs` should hold the single public IP assigned to a node. Other node configuration would require different configuration of this helmchart.
