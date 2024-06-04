@@ -2,7 +2,15 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: argocd-ui
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
 spec:
+  tls:
+    - secretName: tls-argocd-ingress
+      hosts:
+        - argocd.societateahermes.ro
+  ingressClassName: nginx
   rules:
   - host: argocd.societateahermes.ro
     http:
@@ -13,9 +21,4 @@ spec:
           service:
             name: argocd-server
             port:
-              number: 80
-  ingressClassName: nginx
-  tls:
-    - secretName: tls-argocd-ingress
-      hosts:
-        - argocd.societateahermes.ro
+              name: https
