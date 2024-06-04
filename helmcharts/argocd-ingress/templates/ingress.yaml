@@ -15,7 +15,7 @@ spec:
             port:
               number: 80
   ingressClassName: nginx
-  tls:
-    - secretName: tls-argocd-ingress
-      hosts:
-        - argocd.societateahermes.ro
+  # tls:
+  #   - secretName: tls-argocd-ingress
+  #     hosts:
+  #       - argocd.societateahermes.ro

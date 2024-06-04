@@ -1,13 +1,13 @@
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: argocd-ingress
-  namespace: argocd
-spec:
-  secretName: tls-argocd-ingress
-  renewBefore: 360h0m0s
-  dnsNames:
-    - argocd.societateahermes.ro
-  issuerRef:
-    name: letsencrypt
-    kind: ClusterIssuer
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: argocd-ingress
+#   namespace: argocd
+# spec:
+#   secretName: tls-argocd-ingress
+#   renewBefore: 360h0m0s
+#   dnsNames:
+#     - argocd.societateahermes.ro
+#   issuerRef:
+#     name: letsencrypt
+#     kind: ClusterIssuer
