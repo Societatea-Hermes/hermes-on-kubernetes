@@ -1,5 +1,5 @@
-ingress-nginx:
-  controller:
-    service:
-      externalIPs:
-        - 20.244.86.84
+# ingress-nginx:
+#   controller:
+#     service:
+#       externalIPs:
+#         - 20.244.86.84
