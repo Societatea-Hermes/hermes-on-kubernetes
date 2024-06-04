@@ -4,3 +4,5 @@ ingress_nginx:
   enabled: true
 cert_manager:
   enabled: true
+argocd_ingress:
+  enabled: true

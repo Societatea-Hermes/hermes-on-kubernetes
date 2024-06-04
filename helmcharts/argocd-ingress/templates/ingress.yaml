@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-ui
+spec:
+  rules:
+  - host: argocd.societateahermes.ro
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: argocd-server
+            port:
+              number: 80
+  ingressClassName: nginx
+  tls:
+    secretName: tls-argocd-ingress
+    hosts:
+      - argocd.societateahermes.ro
