@@ -23,8 +23,8 @@ Only users from the configured domain can sign up and use Vaultwarden.
 terraform init
 terraform plan
 ```
-1. If everything looks as it should, run a `terraform apply` as well.
-2. You should be provided with the IP of the VM. Configure DNS to point your desired domain to it. The **Hermes admin** should do this in Cloudflare. **Make sure the Cloudflare proxy is off**.
+6. If everything looks as it should, run a `terraform apply` as well.
+7. You should be provided with the IP of the VM. Configure DNS to point your desired domain to it. The **Hermes admin** should do this in Cloudflare. **Make sure the Cloudflare proxy is off**.
 
 
 ## Implementation details
