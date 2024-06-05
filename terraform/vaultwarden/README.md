@@ -34,7 +34,7 @@ Our DNS provider is Cloudflare.
 
 The **Hermes admin** account needs to be used for all of these operations, as most of the required information can be found by using it. 
 
-We have Google Workspaces for Nonprofits which provides us with 100TB of Google Drive storage. Thanks to that, we configure the backups to be saved to a folder in Google Drive. The **Hermes admin** account has a `Backups/Vaultwarden` folder in which everything is stored. The `hermes-bot` service account is used to do the uploading, and you can generate a new key by going [here](https://console.cloud.google.com/iam-admin/serviceaccounts/) and choosing the `hermes-bot` service account.Domain-wide Delegation is used in the [admin console](admin.google.com) to give `hermes-bot` the necessary permissions to access Google Drives.
+We have Google Workspaces for Nonprofits which provides us with 100TB of Google Drive storage. Thanks to that, we configure the backups to be saved to a folder in Google Drive. The **Hermes admin** account has a `Backups/Vaultwarden` folder in which everything is stored. The `hermes-bot` service account is used to do the uploading, and you can generate a new key by going [here](https://console.cloud.google.com/iam-admin/serviceaccounts/) and choosing the `hermes-bot` service account. Domain-wide Delegation is used in the [admin console](admin.google.com) to give `hermes-bot` the necessary permissions to access Google Drives.
 
 ## Files
 - main.tf holds the actual terraform script
