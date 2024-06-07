@@ -7,7 +7,7 @@ spec:
   secretName: prometheus-tls
   renewBefore: 360h0m0s
   dnsNames:
-    - prometheus.societateahermes.ro
+    - prometheus.societatea-hermes.ro
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

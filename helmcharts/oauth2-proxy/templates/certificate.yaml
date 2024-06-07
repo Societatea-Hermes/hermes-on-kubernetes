@@ -7,7 +7,7 @@ spec:
   secretName: oauth2-proxy-tls
   renewBefore: 360h0m0s
   dnsNames:
-    - auth.societateahermes.ro
+    - auth.societatea-hermes.ro
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer
