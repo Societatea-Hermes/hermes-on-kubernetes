@@ -30,8 +30,7 @@ spec:
           - --google-service-account-json=/var/secrets/hermes-bot-sa-key.json
           - --google-admin-email=admin@societatea-hermes.ro
           # - --google-group=all@societatea-hermes.ro
-          - --scope=https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid https://www.googleapis.com/auth/admin.directory.group.readonly
-          - --google-group=sa@societatea-hermes.ro
+          - --allowed-group=sa@societatea-hermes.ro
           name: oauth2-proxy
           image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
           imagePullPolicy: Always
