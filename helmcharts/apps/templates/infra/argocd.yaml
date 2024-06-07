@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/argocd
+    path: helmcharts/argocd/overlays
     kustomize:
       namespace: argocd
   syncPolicy:
