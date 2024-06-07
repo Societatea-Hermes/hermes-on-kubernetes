@@ -14,3 +14,4 @@ data:
         key: sshPrivateKey
         name: github-ssh-key
       type: git
+  application.instanceLabelKey: societatea-hermes.ro/name
