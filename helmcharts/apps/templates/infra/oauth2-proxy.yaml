@@ -10,7 +10,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-98"
 spec:
   destination:
-    namespace: default
+    namespace: oauth2-proxy
     server: https://kubernetes.default.svc
   project: default #infra
   source:
