@@ -1,6 +1,6 @@
 locals {
   master_node_envvars = [
-    "VAR_NODE_ROLE=master",#normal, spot
+    "VAR_NODE_TYPE=master",#normal, spot
     "VAR_K3S_TOKEN=${random_string.k3s_token.result}",
     "VAR_GITHUB_TOKEN=${var.github_token}",
   ]
