@@ -15,14 +15,14 @@ kube-prometheus-stack:
               webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-url/webhook-url
               title: '{{ template "discord.default.title" . }}'
               text: '{{ template "discord.default.message" . }}'
-      externalUrl: https://alertmanager.societatea-hermes.ro/
+      # externalUrl: https://alertmanager.societatea-hermes.ro/
     alertmanagerSpec:
       secrets: 
         - alertmanager-discord-webhook-url
   grafana:
     grafana.ini:
       server:
-        root_url: http://grafana.toliveistolearn.com/
+        # root_url: http://grafana.toliveistolearn.com/
   kubernetesServiceMonitors:
     enabled: true
   kubeApiServer:
@@ -49,8 +49,8 @@ kube-prometheus-stack:
     enabled: true
   prometheus:
     enabled: true
-    prometheusSpec:
-      externalUrl: https://prometheus.societatea-hermes.ro/
+    # prometheusSpec:
+    #   externalUrl: https://prometheus.societatea-hermes.ro/
     storageSpec:
       volumeClaimTemplate:
         spec:
