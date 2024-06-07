@@ -6,3 +6,5 @@ cert_manager:
   enabled: true
 argocd_ingress:
   enabled: true
+oauth2_proxy:
+  enabled: true

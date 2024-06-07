@@ -1,13 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: argocd-ingress
-  namespace: argocd
+  name: oauth2-proxy
+  namespace: oauth2-proxy
 spec:
-  secretName: argocd-server-tls
+  secretName: oauth2-proxy-tls
   renewBefore: 360h0m0s
   dnsNames:
-    - argocd.societateahermes.ro
+    - auth.societateahermes.ro
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

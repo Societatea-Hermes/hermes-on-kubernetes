@@ -7,8 +7,6 @@ metadata:
 spec:
   tls:
     - secretName: argocd-server-tls
-      hosts:
-        - argocd.societateahermes.ro
   ingressClassName: nginx
   rules:
   - host: argocd.societateahermes.ro

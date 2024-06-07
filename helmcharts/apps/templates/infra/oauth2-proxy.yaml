@@ -1,22 +1,22 @@
-{{- if and .Values.argocd_ingress.enabled .Values.ingress_nginx.enabled }}
+{{- if .Values.oauth2_proxy.enabled }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argocd-ingress
+  name: oauth2-proxy
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "-97"
+    argocd.argoproj.io/sync-wave: "-98"
 spec:
   destination:
-    namespace: argocd
+    namespace: default
     server: https://kubernetes.default.svc
   project: default #infra
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/argocd-ingress
+    path: helmcharts/oauth2-proxy
     helm:
       valueFiles: 
         - values.yaml

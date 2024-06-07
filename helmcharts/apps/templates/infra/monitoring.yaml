@@ -7,7 +7,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "-97"
+    argocd.argoproj.io/sync-wave: "-96"
 spec:
   destination:
     namespace: monitoring
