@@ -7,6 +7,17 @@ terraform {
   }
 }
 
+# This is done awfully, but works for now
+locals {
+  startup_script = replace(replace(replace(replace(replace(replace(file("startup.sh"),
+  "[DOMAIN]", var.domain), 
+  "[EMAIL]", var.email), 
+  "[SUBDOMAIN]", var.subdomain),
+  "[CLOUDFLARE_API_KEY]", var.cloudflare_api_key),
+  "[BACKUP_FOLDER]", var.backup_folder),
+  "[SERVICE_ACCOUNT_JSON]", var.service_account_json)
+}
+
 provider "google" {
   project = "societatea-hermes"
 }
@@ -36,7 +47,7 @@ resource "google_compute_instance" "vaultwarden" {
   }
 
   metadata = {
-    startup-script = file("startup.sh")
+    startup-script = local.startup_script
   }
   service_account {
     scopes = ["compute-rw"]
