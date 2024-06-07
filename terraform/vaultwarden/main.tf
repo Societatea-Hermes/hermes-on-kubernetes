@@ -15,7 +15,7 @@ locals {
   "[SUBDOMAIN]", var.subdomain),
   "[CLOUDFLARE_API_KEY]", var.cloudflare_api_key),
   "[BACKUP_FOLDER]", var.backup_folder),
-  "[SERVICE_ACCOUNT_JSON]", var.service_account_json)
+  "[SERVICE_ACCOUNT_KEY_JSON]", var.service_account_json)
 }
 
 provider "google" {
