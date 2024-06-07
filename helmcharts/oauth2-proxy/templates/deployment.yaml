@@ -27,7 +27,7 @@ spec:
           - --upstream=file:///dev/null
           - --session-cookie-minimal=true
           - --reverse-proxy=true
-          - --google-service-account-json=/var/secrets/hermes-bot-sa-key.json
+          # - --google-service-account-json=/var/secrets/hermes-bot-sa-key.json
           name: oauth2-proxy
           image: quay.io/oauth2-proxy/oauth2-proxy:v7.6.0
           imagePullPolicy: Always
