@@ -5,4 +5,5 @@ resources:
   - ../base
 
 patches:
-  - path: argocd-configmap.yaml
+  - path: argocd-cm.yaml
+  - path: argocd-cmd-params-cm.yaml
