@@ -21,23 +21,8 @@ kube-prometheus-stack:
         root_url: https://grafana.societatea-hermes.ro/
       users: 
         allow_sign_up: false
-        auto_assign_org: true
       auth:
         disable_login_form: true
-      #   oauth_allow_insecure_email_lookup: true
-      # auth.google:
-      #   enabled: true
-      #   allow_sign_up: false
-      #   auto_login: true
-      #   client_id: ${CLIENT_ID}
-      #   client_secret: ${CLIENT_SECRET}
-      #   scopes: openid email profile https://www.googleapis.com/auth/cloud-identity.groups.readonly
-      #   auth_url: https://accounts.google.com/o/oauth2/v2/auth
-      #   token_url: https://oauth2.googleapis.com/token
-      #   api_url: https://openidconnect.googleapis.com/v1/userinfo
-      #   allowed_domains: societatea-hermes.ro
-      #   hosted_domain: societatea-hermes.ro
-      #   use_pkce: true
       auth.proxy:
         enabled: true
         header_name: X-Auth-Request-Email
@@ -47,7 +32,6 @@ kube-prometheus-stack:
       security:
         disable_initial_admin_creation: true
         cookie_secure: true
-    envFromSecret: grafana-oidc
   kubernetesServiceMonitors:
     enabled: true
   kubeApiServer:
