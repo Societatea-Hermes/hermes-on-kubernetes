@@ -6,6 +6,9 @@ metadata:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.societatea-hermes.ro/oauth2/auth?allowed_groups=sa@societatea-hermes.ro,developers@societatea-hermes.ro"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.societatea-hermes.ro/oauth2/start?rd=https://$host$request_uri"
+
 spec:
   tls:
     - secretName: argocd-server-tls
