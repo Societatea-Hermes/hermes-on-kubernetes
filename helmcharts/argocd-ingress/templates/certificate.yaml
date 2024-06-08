@@ -7,7 +7,7 @@ spec:
   secretName: argocd-server-tls
   renewBefore: 360h0m0s
   dnsNames:
-    - argocd.societateahermes.ro
+    - argocd.societatea-hermes.ro
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

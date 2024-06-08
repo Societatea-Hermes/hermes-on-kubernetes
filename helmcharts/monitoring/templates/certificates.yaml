@@ -27,3 +27,18 @@ spec:
     name: letsencrypt
     kind: ClusterIssuer
   revisionHistoryLimit: 2
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: grafana
+  namespace: monitoring
+spec:
+  secretName: grafana-tls
+  renewBefore: 360h0m0s
+  dnsNames:
+    - grafana.societatea-hermes.ro
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2

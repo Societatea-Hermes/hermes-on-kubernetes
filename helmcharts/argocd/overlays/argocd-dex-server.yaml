@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: argocd-dex-server
+spec:
+  template:
+    spec:
+      containers:
+      - name: dex
+        volumeMounts:
+          - mountPath: /tmp/oidc
+            name: google-json
+            readOnly: true
+      volumes:
+        - name: google-json
+          secret:
+            defaultMode: 420
+            secretName: argocd-oidc
+

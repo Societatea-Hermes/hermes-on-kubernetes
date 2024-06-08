@@ -9,7 +9,7 @@ spec:
     - secretName: argocd-server-tls
   ingressClassName: nginx
   rules:
-  - host: argocd.societateahermes.ro
+  - host: argocd.societatea-hermes.ro
     http:
       paths:
       - path: /
