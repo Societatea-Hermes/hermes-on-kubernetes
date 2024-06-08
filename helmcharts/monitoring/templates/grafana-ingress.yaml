@@ -14,7 +14,7 @@ metadata:
 
       proxy_set_header  X-Auth-Request-Groups $groups;
       proxy_set_header  X-Auth-Request-Email $email;
-      proxy_set_header  X-Auth-Request-User $user;
+      proxy_set_header  X-Auth-Request-Preferred-Username $user;
 
       access_by_lua_block {
         local role = ""
@@ -24,8 +24,7 @@ metadata:
           role = "Editor"
         end
         ngx.req.set_header("X-Auth-Request-Role", role)
-        ngx.log(ngx.STDERR, 'ngnx.var.groups: ' .. ngx.var.groups)
-        ngx.log(ngx.STDERR, 'rile: ' .. role)
+        ngx.log(ngx.STDERR, ngx.var.user .. " is a " .. role)
 
       }
 spec:
