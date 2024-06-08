@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: production-apps
+  namespace: argocd
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: 'production-apps'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  - name: project-admin
+    policies:
+      - p, proj:production-apps:project-admin, applications, *, production-apps/*, allow
+    groups:
+      - developers@societatea-hermes.ro
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: development-apps
+  namespace: argocd
+spec:
+  sourceRepos:
+  - '*'
+  destinations:
+  - namespace: 'development-apps'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  roles:
+  - name: project-admin
+    policies:
+      - p, proj:development-apps:project-admin, applications, *, development-apps/*, allow
+    groups:
+      - developers@societatea-hermes.ro
