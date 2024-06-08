@@ -8,6 +8,9 @@ kube-prometheus-stack:
           - receiver: 'null'
             matchers:
               - alertname =~ "InfoInhibitor|Watchdog"
+          - receiver: 'discord_alerts'
+            matchers:
+              - alertname =~ ".*"
       receivers:
         - name: 'null'
         - name: 'discord_alerts'
