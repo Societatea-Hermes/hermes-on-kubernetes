@@ -18,7 +18,7 @@ metadata:
 
       access_by_lua_block {
         local role = ""
-        if string.find(ngx.var.groups, "sa@societatea-hermes.ro") then
+        if string.find(ngx.var.groups, "sa@societatea%-hermes%.ro") then
           role = "Admin"
         else
           role = "Editor"
