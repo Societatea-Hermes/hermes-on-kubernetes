@@ -43,7 +43,7 @@ kube-prometheus-stack:
         header_name: X-Auth-Request-Email
         header_property: email
         auto_sign_up: true
-        headers: Name:X-Auth-Request-User Email:X-Auth-Request-Email Groups:X-Auth-Request-Groups
+        headers: Name:X-Auth-Request-Name Email:X-Auth-Request-Email Groups:X-Auth-Request-Groups Role:X-Auth-Request-Role
       security:
         disable_initial_admin_creation: true
         cookie_secure: true
