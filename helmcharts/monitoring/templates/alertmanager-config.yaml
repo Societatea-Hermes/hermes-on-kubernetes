@@ -8,12 +8,12 @@ metadata:
 spec:
   route:
     receiver: "discord"
-    groupBy: ["..."]
+    groupBy: ["alertname"]
     groupWait: 30s
     groupInterval: 5m
     repeatInterval: 12h
     matchers:
-      - name: alertname
+      - name: namespace
         matchType: =~
         value: .*
   receivers:
@@ -22,3 +22,4 @@ spec:
         - apiURL:
             name: alertmanager-discord-webhook-url
             key: webhook-url
+        
