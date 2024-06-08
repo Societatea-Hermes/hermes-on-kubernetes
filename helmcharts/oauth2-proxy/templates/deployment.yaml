@@ -27,6 +27,7 @@ spec:
           - --upstream=file:///dev/null
           - --session-cookie-minimal=true
           - --reverse-proxy=true
+          - --set-xauthrequest
           - --google-service-account-json=/var/secrets/hermes-bot-sa-key.json
           - --google-admin-email=admin@societatea-hermes.ro
           - --google-group=all@societatea-hermes.ro
