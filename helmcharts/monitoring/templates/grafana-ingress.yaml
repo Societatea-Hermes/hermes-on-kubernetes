@@ -12,9 +12,9 @@ metadata:
       auth_request_set $email $upstream_http_x_auth_request_email;
       auth_request_set $name $upstream_http_x_auth_request_name;
 
-      set_header X-Auth-Request-Groups $groups;
-      set_header X-Auth-Request-Email $email;
-      set_header X-Auth-Request-Name $name;
+      add_header X-Auth-Request-Groups $groups;
+      add_header X-Auth-Request-Email $email;
+      add_header X-Auth-Request-Name $name;
 
       access_by_lua_block {
         local role = ""
