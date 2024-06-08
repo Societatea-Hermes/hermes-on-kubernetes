@@ -24,6 +24,7 @@ data:
           adminEmail: admin@societatea-hermes.ro
           clientID: $argocd-oidc:CLIENT_ID
           clientSecret: $argocd-oidc:CLIENT_SECRET
+          issuer_url: https://accounts.google.com
         type: oidc
         id: google
         name: Google
