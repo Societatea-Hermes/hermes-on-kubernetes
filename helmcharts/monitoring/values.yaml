@@ -14,9 +14,9 @@ kube-prometheus-stack:
       receivers:
         - name: 'null'
         - name: 'discord_alerts'
-          webhook_configs:
+          discord_configs:
             - send_resolved: true
-              url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-url/webhook-url
+              webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-url/webhook-url
       # externalUrl: https://alertmanager.societatea-hermes.ro/
     alertmanagerSpec:
       secrets: 
