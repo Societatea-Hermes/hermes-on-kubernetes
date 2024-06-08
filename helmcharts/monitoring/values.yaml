@@ -1,26 +1,7 @@
 kube-prometheus-stack:
   fullnameOverride: monitoring
   alertmanager:
-  #add persistance to alertmanager
-    config:
-      route:
-        routes:
-          - receiver: 'null'
-            matchers:
-              - alertname =~ "InfoInhibitor|Watchdog"
-          - receiver: 'discord_alerts'
-            matchers:
-              - alertname =~ ".*"
-      receivers:
-        - name: 'null'
-        - name: 'discord_alerts'
-          discord_configs:
-            - send_resolved: true
-              webhook_url_file: /etc/alertmanager/secrets/alertmanager-discord-webhook-url/webhook-url
-      # externalUrl: https://alertmanager.societatea-hermes.ro/
     alertmanagerSpec:
-      secrets: 
-        - alertmanager-discord-webhook-url
       storage:
         volumeClaimTemplate:
           spec:
