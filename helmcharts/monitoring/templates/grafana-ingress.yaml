@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monitoring
+  namespace: monitoring
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/auth-url: "https://auth.societatea-hermes.ro/oauth2/auth?allowed_groups=sa@societatea-hermes.ro,developers@societatea-hermes.ro"
+    nginx.ingress.kubernetes.io/auth-signin: "https://auth.societatea-hermes.ro/oauth2/start?rd=https://$host$request_uri"
+    nginx.ingress.kubernetes.io/configuration-snippet: |
+      auth_request_set $groups $upstream_http_x_auth_request_groups;
+      access_by_lua_block {
+        local role = ""
+        if string.find(ngx.var.groups, "sa@societatea-hermes.ro") then
+          role = "Admin"
+        else
+          role = "Editor"
+        end
+        ngx.req.set_header("X-Auth-Request-Role", role)
+      }
+spec:
+  ingressClassName: nginx
+  tls:
+    - secretName: grafana-tls
+  rules:
+    - host: grafana.societatea-hermes.ro
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: monitoring-grafana
+                port: 
+                  name: http-web
