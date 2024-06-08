@@ -4,7 +4,6 @@ metadata:
   name: argocd-rbac-cm
 data:
   scopes: '[groups, email]'
-  policy.default: role:readonly
   policy.csv: |
     g, sa@societatea-hermes.ro, role:admin
     g, admin@societatea-hermes.ro, role:admin
