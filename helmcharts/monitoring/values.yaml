@@ -21,6 +21,7 @@ kube-prometheus-stack:
       storage:
         volumeClaimTemplate:
           spec:
+            storageClassName: local-path-ssd
             resources:
               requests:
                 storage: 500Mi
