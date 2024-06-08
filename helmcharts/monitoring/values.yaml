@@ -57,7 +57,7 @@ kube-prometheus-stack:
   prometheus:
     enabled: true
     prometheusSpec:
-    #   externalUrl: https://prometheus.societatea-hermes.ro/
+      externalUrl: https://prometheus.societatea-hermes.ro/
       storageSpec:
         volumeClaimTemplate:
           spec:
