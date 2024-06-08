@@ -21,7 +21,7 @@ kube-prometheus-stack:
       storage:
         volumeClaimTemplate:
           spec:
-            storageClassName: local-path-ssd
+            storageClassName: local-path
             resources:
               requests:
                 storage: 500Mi
@@ -56,14 +56,14 @@ kube-prometheus-stack:
     enabled: true
   prometheus:
     enabled: true
-    # prometheusSpec:
+    prometheusSpec:
     #   externalUrl: https://prometheus.societatea-hermes.ro/
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: local-path-ssd
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 4Gi
+      storageSpec:
+        volumeClaimTemplate:
+          spec:
+            storageClassName: local-path
+            accessModes:
+              - ReadWriteOnce
+            resources:
+              requests:
+                storage: 4Gi
