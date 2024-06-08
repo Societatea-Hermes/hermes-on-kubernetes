@@ -1,6 +1,7 @@
 kube-prometheus-stack:
   fullnameOverride: monitoring
   alertmanager:
+  #add persistance to alertmanager
     config:
       route:
         routes:
@@ -19,10 +20,17 @@ kube-prometheus-stack:
     alertmanagerSpec:
       secrets: 
         - alertmanager-discord-webhook-url
+      storage:
+        volumeClaimTemplate:
+          spec:
+            resources:
+              requests:
+                storage: 500Mi
   grafana:
     grafana.ini:
       server:
         # root_url: http://grafana.toliveistolearn.com/
+        # add persistance to grafana
   kubernetesServiceMonitors:
     enabled: true
   kubeApiServer:
