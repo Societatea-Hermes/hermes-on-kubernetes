@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/oauth2-proxy
+    path: helmcharts/infra/oauth2-proxy
     helm:
       valueFiles: 
         - values.yaml

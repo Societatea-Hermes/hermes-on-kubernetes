@@ -1,1 +1,1 @@
-This folder contains the helmcharts that are used by Hermes. The apps one deploys everything else.
+This folder contains the helmcharts that are used by Hermes. The apps one deploys everything.

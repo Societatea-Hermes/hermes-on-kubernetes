@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: main-website-certificate
+spec:
+  secretName: main-website-tls
+  renewBefore: 360h0m0s
+  dnsNames:
+  - "societatea-hermes.ro"
+  - "www.societatea-hermes.ro"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2

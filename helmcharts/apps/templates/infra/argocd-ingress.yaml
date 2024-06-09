@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/argocd-ingress
+    path: helmcharts/infra/argocd-ingress
     helm:
       valueFiles: 
         - values.yaml
