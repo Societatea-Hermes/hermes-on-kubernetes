@@ -28,7 +28,7 @@ spec:
                   key: api-key
           volumeMounts:
             - name: ddns-config
-              mountPath: /config
+              mountPath: /defaults
       volumes:
         - name: ddns-config
           configMap:
