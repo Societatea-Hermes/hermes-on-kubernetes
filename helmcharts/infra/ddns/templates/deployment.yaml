@@ -16,7 +16,7 @@ spec:
         - name: ddns
           image: linuxserver/ddclient
           env:
-            - name: LOGIN
+            - name: EMAIL
               valueFrom:
                 secretKeyRef:
                   name: cloudflare-credentials
