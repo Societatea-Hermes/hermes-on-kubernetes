@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: volunteer-management-api
-          image: ghcr.io/societatea-hermes/hermes-volunteer-api:1
+          image: ghcr.io/societatea-hermes/hermes-volunteer-api:2
           ports:
             - containerPort: 80
           env:
