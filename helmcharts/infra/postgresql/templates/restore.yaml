@@ -30,7 +30,7 @@ spec:
           args:
             - |
               tar -xzvf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
-              psql -h postgres.database.svc.cluster.local -f /backups/dump.sql
+              psql -h postgres.database.svc.cluster.local -f /backups/backups/dump.sql
           env:
             - name: PGPASSWORD
               valueFrom:
