@@ -43,7 +43,6 @@ spec:
         name: postgresql-db-claim
       spec:
         accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "local-path"
         resources:
           requests:
             storage: 6Gi
