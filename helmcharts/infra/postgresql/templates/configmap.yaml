@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: rclone-config
 data:
-  rclone.config: |
+  rclone.conf: |
     [gdrive]
     type=drive
     client_id =
