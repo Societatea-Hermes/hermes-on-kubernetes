@@ -32,5 +32,9 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: DB_HOST
               value: postgres.database.svc.cluster.local
+            - name: DB_PORT
+              value: "5432"
             - name: DB_NAME
               value: volunteers
+            - name: APP_PORT
+              value: "80"
