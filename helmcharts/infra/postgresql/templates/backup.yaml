@@ -39,7 +39,7 @@ spec:
             args:
               - copy
               - /backups
-              - gdrive:
+              - "gdrive:"
               - --config
               - /config/rclone.conf
             volumeMounts:
