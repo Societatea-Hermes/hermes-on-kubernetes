@@ -36,7 +36,7 @@ spec:
             args:
               - copy
               - /$(date +'%Y-%m-%d').dump
-              - remote:db-backups
+              - gdrive
               - --config
               - /config/rclone.conf
             volumeMounts:
