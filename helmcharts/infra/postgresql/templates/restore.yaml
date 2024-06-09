@@ -29,7 +29,7 @@ spec:
           command: ["/bin/bash", "-c"]
           args:
             - |
-              tar -xzf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
+              tar -xzvf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
               psql -h postgres.database.svc.cluster.local -f /backups/dump.sql
           env:
             - name: PGPASSWORD
