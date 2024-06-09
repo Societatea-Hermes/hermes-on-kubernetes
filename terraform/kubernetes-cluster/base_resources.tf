@@ -28,8 +28,8 @@ resource azurerm_network_security_group "default" {
 
  
   security_rule = [ {
-    name = "allow_master_node_80_443"
-    description = "Allow inbound traffic on port 80 and 443 from the master node"
+    name = "allow_80_443"
+    description = "Allow inbound traffic on port 80 and 443"
     priority = 1002
     direction = "Inbound"
     access = "Allow"
@@ -37,7 +37,7 @@ resource azurerm_network_security_group "default" {
     source_port_range = "*"
     destination_port_ranges = [80, 443]
     source_address_prefix = "*"
-    destination_address_prefix = azurerm_linux_virtual_machine.hermes-master-node.public_ip_address
+    destination_address_prefix = "*"
     destination_address_prefixes          = null
     source_application_security_group_ids = null
     destination_application_security_group_ids = null

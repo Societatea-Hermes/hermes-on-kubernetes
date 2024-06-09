@@ -9,6 +9,8 @@ Each VM has a startup script deployed to it that configures the entire cluster a
 2. Authenticate using `az login` with the **Hermes admin** account. Make sure to choose the right subscription (the Azure Grant for Nonprofits) when doing so.
 
 
+WHEN PASSING THE SSH KEY IN THE terraform.tfvars FILE MAKE SURE THE LINE ENDINGS ARE LF, NOT CLRF!!!
+
 
 # How to make changes to ArgoCD
 You can't easily do that without recreating the VM, because the `custom_data` field forces replacement.

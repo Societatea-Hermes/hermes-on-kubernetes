@@ -1,8 +1,8 @@
 locals {
   master_node_envvars = [
-    "VAR_NODE_TYPE=master",#normal, spot
+    "VAR_NODE_TYPE=master",
     "VAR_K3S_TOKEN=${random_string.k3s_token.result}",
-    "VAR_GITHUB_TOKEN=${var.github_token}",
+    "VAR_GITHUB_SSH_KEY=${base64encode(var.github_ssh_key)}",
   ]
 }
 
@@ -47,7 +47,7 @@ resource "azurerm_linux_virtual_machine" "hermes-master-node" {
   for_each = var.use_password ? (var.admin_ssh_keys) : []
     content {
       username   = var.admin_username
-      public_key = file(".ssh/${each.valye}")
+      public_key = file(".ssh/${each.value}")
     }
   }
   
