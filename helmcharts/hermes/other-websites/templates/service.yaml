@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production-apps
+  labels:
+    app.kubernetes.io/name: old-cariereinit-website
+  name: old-cariereinit-website
+spec:
+  ports:
+    - port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app.kubernetes.io/name: old-cariereinit-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production-apps
+  labels:
+    app.kubernetes.io/name: old-hackathon-website
+  name: old-hackathon-website
+spec:
+  ports:
+    - port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app.kubernetes.io/name: old-hackathon-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production-apps
+  labels:
+    app.kubernetes.io/name: old-ssmi-website
+  name: old-ssmi-website
+spec:
+  ports:
+    - port: 8000
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app.kubernetes.io/name: old-ssmi-website

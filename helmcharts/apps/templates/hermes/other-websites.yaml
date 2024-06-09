@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: other-websites-prd
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+spec:
+  destination:
+    namespace: production-apps
+    server: https://kubernetes.default.svc
+  project: production-apps
+  source:
+    repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+    targetRevision: main
+    path: helmcharts/hermes/other-websites
+    helm:
+      valueFiles: 
+        - values.prd.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

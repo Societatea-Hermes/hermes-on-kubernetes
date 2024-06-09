@@ -1,0 +1,45 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cariereinit-certificate
+  namespace: production-apps
+spec:
+  secretName: tls-cariereinit
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
+  - "cariereinit.ro"
+  - "cariereinit.societatea-hermes.ro"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: hackathon-certificate
+  namespace: production-apps
+spec:
+  secretName: tls-hackathon
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
+  - "hackathon.societatea-hermes.ro"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2
+-
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: ssmi-certificate
+  namespace: production-apps
+spec:
+  secretName: tls-ssmi
+  renewBefore: 360h0m0s # 15d
+  dnsNames:
+  - "ssmi.societatea-hermes.ro"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2
