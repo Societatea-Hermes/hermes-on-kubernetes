@@ -10,3 +10,5 @@ oauth2_proxy:
   enabled: true
 ddns:
   enabled: true
+postgres:
+  enabled: true

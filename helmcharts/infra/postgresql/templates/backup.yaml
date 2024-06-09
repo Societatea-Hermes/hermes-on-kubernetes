@@ -1,3 +1,62 @@
-
-
---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: postgres-backups
+spec:
+  schedule: "0 1 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          initContainers:
+          - name: pg_dump
+            image: postgres:16.3-alpine
+            imagePullPolicy: IfNotPresent
+            args:
+              - pg_dump
+              - -Fc
+              - -f
+              - /$(date +'%Y-%m-%d').dump
+              - -h 
+              - postgres.database.svc.cluster.local
+            env:
+              - name: PGPA  SSWORD
+                valueFrom:
+                  secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+              - name: PGUSER
+              value: postgres
+          - name: rclone
+            image: rclone/rclone
+            imagePullPolicy: IfNotPresent
+            args:
+              - copy
+              - /$(date +'%Y-%m-%d').dump
+              - remote:db-backups
+              - --config
+              - /config/rclone.conf
+            volumeMounts:
+              - name: rclone-config
+                mountPath: /config
+              - name: service-account
+                mountPath: /data
+          containers:
+          - name: done
+            image: busybox
+            imagePullPolicy: IfNotPresent
+            command: ["echo"]
+            args: ["Backup completed"]
+            volumeMounts:
+              - name: rclone-config
+                mountPath: /config
+              - name: service-account
+                mountPath: /data
+          restartPolicy: OnFailure
+          volumes:
+            - name: rclone-config
+              configMap:
+                name: rclone-config
+            - name: service-account
+              secret:
+                secretName: rclone-service-account-key

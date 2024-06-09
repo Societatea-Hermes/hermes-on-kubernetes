@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rclone-config
+data:
+  rclone.config: |
+    [gdrive]
+    type=drive
+    client_id =
+    client_secret = 
+    scope = drive
+    root_folder_id = 1wn68xFNEhwKvPtJQMXu4sBpiRde3y04w 
+    service_account_file = /data/key.json

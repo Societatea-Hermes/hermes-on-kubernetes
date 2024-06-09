@@ -1,0 +1,30 @@
+{{- if .Values.postgres.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: postgresql
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+spec:
+  destination:
+    namespace: database
+    server: https://kubernetes.default.svc
+  project: default #infra
+  source:
+    repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+    targetRevision: main
+    path: helmcharts/infra/postgesql
+    helm:
+      valueFiles: 
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+{{- end}}

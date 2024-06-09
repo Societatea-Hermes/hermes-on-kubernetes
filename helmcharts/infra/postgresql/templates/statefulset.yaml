@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  labels:
+    kubernetes.io/name: postgres
+spec:
+  serviceName: postgres
+  selector:
+    matchLabels:
+      kubernetes.io/name: postgres
+  template:
+    metadata:
+      labels:
+        kubernetes.io/name: postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16.3-alpine
+          imagePullPolicy: "IfNotPresent"
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: postgredb
+      volumes:
+        - name: postgredb
+          persistentVolumeClaim:
+            claimName: postgres-pv-claim
+            storageClassName: standard
+            capacity:
+              storage: 6Gi
