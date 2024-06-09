@@ -9,6 +9,6 @@ spec:
     - port: 80
       name: http
       protocol: TCP
-      targetPort: 80
+      targetPort: 5173
   selector:
     app.kubernetes.io/name: volunteer-management-frontend

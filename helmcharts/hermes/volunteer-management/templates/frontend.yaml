@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volunteer-management-frontend
+  labels:
+    app.kubernetes.io/name: volunteer-management-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: volunteer-management-frontend
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: volunteer-management-frontend
+    spec:
+      containers:
+        - name: volunteer-management-frontend
+          image: ghcr.io/societatea-hermes/hermes-volunteer-management-frontend:4
+          ports:
+            - containerPort: 5173
