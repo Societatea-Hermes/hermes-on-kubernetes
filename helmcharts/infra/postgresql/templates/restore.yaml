@@ -1,4 +1,4 @@
-{{- if .Values.restore-backup.enabled }}
+{{- if .Values.restore_backup.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
