@@ -12,7 +12,7 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - copy
-            - "gdrive:{{ .Values.restore-backup.path }}"
+            - "gdrive:{{ .Values.restore_backup.path }}"
             - /backups
             - --config
             - /config/rclone.conf
@@ -28,7 +28,7 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["/bin/bash", "-c"]
           args:
-            - pg_restore -h postgres.database.svc.cluster.local < /backups/{{ .Values.restore-backup.path }}
+            - pg_restore -h postgres.database.svc.cluster.local < /backups/{{ .Values.restore_backup.path }}
           env:
             - name: PGPASSWORD
               valueFrom:
