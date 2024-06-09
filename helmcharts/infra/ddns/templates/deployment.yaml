@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ddns
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ddns
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ddns
+    spec:
+      containers:
+        - name: ddns
+          image: linuxserver/ddclient
+          env:
+            - name: LOGIN
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-credentials
+                  key: email
+            - name: API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: cloudflare-credentials
+                  key: api-key
+          volumeMounts:
+            - name: ddns-config
+              mountPath: /config
+      volumes:
+        - name: ddns-config
+          configMap:
+            name: ddns-config

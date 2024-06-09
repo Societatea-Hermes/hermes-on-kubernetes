@@ -1,0 +1,30 @@
+{{- if .Values.ddns.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ddns
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-200"
+spec:
+  destination:
+    namespace: ddns
+    server: https://kubernetes.default.svc
+  project: default #infra
+  source:
+    repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+    targetRevision: main
+    path: helmcharts/infra/ddns
+    helm:
+      valueFiles: 
+        - values.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+{{- end}}

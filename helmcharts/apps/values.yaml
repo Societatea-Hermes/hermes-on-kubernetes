@@ -8,3 +8,5 @@ argocd_ingress:
   enabled: true
 oauth2_proxy:
   enabled: true
+ddns:
+  enabled: true
