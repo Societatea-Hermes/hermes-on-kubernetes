@@ -35,7 +35,9 @@ spec:
             - mountPath: /var/lib/postgresql/data
               name: postgresql-db
   volumeClaimTemplates:
-    - metadata:
+    - apiVersion: v1	
+      kind: PersistentVolumeClaim 
+      metadata:
         name: postgresql-db
       spec:
         accessModes: [ "ReadWriteOnce" ]
