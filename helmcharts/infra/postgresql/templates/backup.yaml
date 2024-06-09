@@ -52,7 +52,6 @@ spec:
               imagePullPolicy: IfNotPresent
               command: ["echo"]
               args: ["Backup completed - $(date +'%Y-%m-%d')"]
-          restartPolicy: OnFailure
           volumes:
             - name: rclone-config
               configMap:
