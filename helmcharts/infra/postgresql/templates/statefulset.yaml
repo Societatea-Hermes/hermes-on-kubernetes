@@ -36,7 +36,7 @@ spec:
               name: postgresql-db
   volumeClaimTemplates:
     - metadata:
-        name: postgresql-db-claim
+        name: postgresql-db
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
