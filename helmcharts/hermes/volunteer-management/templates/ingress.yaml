@@ -21,7 +21,7 @@ spec:
               name: volunteer-management-api
               port:
                 number: 80
-        - path: /*
+        - path: /
           pathType: ImplementationSpecific
           backend:
             service:
