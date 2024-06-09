@@ -15,7 +15,7 @@ spec:
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/herems/main-website
+    path: helmcharts/hermes/main-website
     helm:
       valueFiles: 
         - values.prd.yaml
