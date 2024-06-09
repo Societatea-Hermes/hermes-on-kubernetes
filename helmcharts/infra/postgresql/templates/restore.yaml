@@ -50,6 +50,7 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["echo"]
           args: ["Restore completed"]
+      restartPolicy: OnFailure
       volumes:
         - name: rclone-config
           configMap:
