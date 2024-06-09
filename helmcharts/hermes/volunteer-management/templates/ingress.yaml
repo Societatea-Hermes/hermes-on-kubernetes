@@ -1,0 +1,30 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: volunteer-management
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  tls:
+  - secretName: volunteer-management-tls
+    hosts:
+      - "volunteers.societatea-hermes.ro"
+  rules:
+  - host: "volunteers.societatea-hermes.ro"
+    http:
+      paths:
+        - path: /api/*
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: volunteer-management-api
+              port:
+                number: 80
+        - path: /*
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: volunteer-management-frontend
+              port:
+                number: 80

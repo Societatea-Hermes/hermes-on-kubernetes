@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: volunteer-management-certificate
+spec:
+  secretName: volunteer-management-tls
+  renewBefore: 360h0m0s
+  dnsNames:
+  - "volunteers.societatea-hermes.ro"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  revisionHistoryLimit: 2

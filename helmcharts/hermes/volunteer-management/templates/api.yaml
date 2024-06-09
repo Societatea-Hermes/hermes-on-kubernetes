@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volunteer-management-api
+  labels:
+    app.kubernetes.io/name: volunteer-management-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: volunteer-management-api
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: volunteer-management-api
+    spec:
+      containers:
+        - name: volunteer-management-api
+          image: ghcr.io/societatea-hermes/hermes-volunteer-api:1
+          ports:
+            - containerPort: 80
+          env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: DB_HOST
+              value: postgres.database.svc.cluster.local
