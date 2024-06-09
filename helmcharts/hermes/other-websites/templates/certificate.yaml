@@ -28,7 +28,7 @@ spec:
     name: letsencrypt
     kind: ClusterIssuer
   revisionHistoryLimit: 2
--
+---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
