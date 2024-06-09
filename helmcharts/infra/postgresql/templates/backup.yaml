@@ -12,13 +12,9 @@ spec:
           - name: pg-dump
             image: postgres:16.3-alpine
             imagePullPolicy: IfNotPresent
+            command: ["/bin/bash", "-c"]
             args:
-              - pg_dump
-              - -Fc
-              - -f
-              - /backups/$(date +'%Y-%m-%d').dump
-              - -h 
-              - postgres.database.svc.cluster.local
+              - pg_dump -Fc -f /backups/$(date +'%Y-%m-%d').dump -h postgres.database.svc.cluster.local
             env:
               - name: PGPASSWORD
                 valueFrom:
