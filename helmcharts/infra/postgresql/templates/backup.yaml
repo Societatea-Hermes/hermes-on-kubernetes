@@ -20,13 +20,15 @@ spec:
               - -h 
               - postgres.database.svc.cluster.local
             env:
-              - name: PGPA  SSWORD
+              - name: PGPASSWORD
                 valueFrom:
                   secretKeyRef:
-                  name: postgres-secret
+                  name: postgres-credentials
                   key: POSTGRES_PASSWORD
               - name: PGUSER
-              value: postgres
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
           - name: rclone
             image: rclone/rclone
             imagePullPolicy: IfNotPresent
@@ -42,16 +44,16 @@ spec:
               - name: service-account
                 mountPath: /data
           containers:
-          - name: done
-            image: busybox
-            imagePullPolicy: IfNotPresent
-            command: ["echo"]
-            args: ["Backup completed"]
-            volumeMounts:
-              - name: rclone-config
-                mountPath: /config
-              - name: service-account
-                mountPath: /data
+            - name: done
+              image: busybox
+              imagePullPolicy: IfNotPresent
+              command: ["echo"]
+              args: ["Backup completed"]
+              volumeMounts:
+                - name: rclone-config
+                  mountPath: /config
+                - name: service-account
+                  mountPath: /data
           restartPolicy: OnFailure
           volumes:
             - name: rclone-config
