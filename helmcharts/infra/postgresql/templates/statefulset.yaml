@@ -40,7 +40,7 @@ spec:
             claimName: postgresql-db-claim
   volumeClaimTemplates:
     - metadata:
-        name: disk-ssd
+        name: postgresql-db-claim
       spec:
         accessModes: [ "ReadWriteOnce" ]
         storageClassName: "local-path"
