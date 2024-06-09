@@ -28,8 +28,9 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["/bin/bash", "-c"]
           args:
-            - tar -xzf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
-            - psql -h postgres.database.svc.cluster.local -f /backups/dump.sql
+            - |
+              tar -xzf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
+              psql -h postgres.database.svc.cluster.local -f /backups/dump.sql
           env:
             - name: PGPASSWORD
               valueFrom:
