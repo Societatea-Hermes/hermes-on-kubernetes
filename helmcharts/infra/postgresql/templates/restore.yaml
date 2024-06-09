@@ -12,7 +12,7 @@ spec:
           imagePullPolicy: IfNotPresent
           args:
             - copy
-            - "gdrive:{{ .Values.restore_backup.date }}"
+            - "gdrive:{{ .Values.restore_backup.date }}.tar.gz"
             - /backups
             - --config
             - /config/rclone.conf
