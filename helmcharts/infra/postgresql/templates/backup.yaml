@@ -23,12 +23,13 @@ spec:
               - name: PGPASSWORD
                 valueFrom:
                   secretKeyRef:
-                  name: postgres-credentials
-                  key: POSTGRES_PASSWORD
+                    name: postgres-credentials
+                    key: POSTGRES_PASSWORD
               - name: PGUSER
-                secretKeyRef:
-                  name: postgres-credentials
-                  key: POSTGRES_USER
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-credentials
+                    key: POSTGRES_USER
           - name: rclone
             image: rclone/rclone
             imagePullPolicy: IfNotPresent
@@ -48,12 +49,7 @@ spec:
               image: busybox
               imagePullPolicy: IfNotPresent
               command: ["echo"]
-              args: ["Backup completed"]
-              volumeMounts:
-                - name: rclone-config
-                  mountPath: /config
-                - name: service-account
-                  mountPath: /data
+              args: ["Backup completed - $(date +'%Y-%m-%d')"]
           restartPolicy: OnFailure
           volumes:
             - name: rclone-config
