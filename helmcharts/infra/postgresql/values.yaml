@@ -1,0 +1,3 @@
+restore-backup:
+  enabled: true
+  path: 2024-06-09.dump

@@ -1,0 +1,62 @@
+{{- if .Values.restore-backup.enabled }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: postgres-restore
+spec:
+  template:
+    spec:
+      initContainers:
+        - name: rclone
+          image: rclone/rclone
+          imagePullPolicy: IfNotPresent
+          args:
+            - copy
+            - "gdrive:{{ .Values.restore-backup.path }}"
+            - /backups
+            - --config
+            - /config/rclone.conf
+          volumeMounts:
+            - name: rclone-config
+              mountPath: /config
+            - name: service-account
+              mountPath: /data
+            - name: backup
+              mountPath: /backups
+        - name: pg-restore
+          image: postgres:16.3-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash", "-c"]
+          args:
+            - pg_restore -h postgres.database.svc.cluster.local < /backups/{{ .Values.restore-backup.path }}
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+          volumeMounts:
+            - name: backup
+              mountPath: /backups
+      containers:
+        - name: done
+          image: busybox
+          imagePullPolicy: IfNotPresent
+          command: ["echo"]
+          args: ["Restore completed"]
+      restartPolicy: OnFailure
+      volumes:
+        - name: rclone-config
+          configMap:
+            name: rclone-config
+        - name: service-account
+          secret:
+            secretName: rclone-service-account-key
+        - name: backup
+          emptyDir: {}
+{{- end }}
