@@ -16,7 +16,7 @@ spec:
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main
-    path: helmcharts/infra/postgesql
+    path: helmcharts/infra/postgresql
     helm:
       valueFiles: 
         - values.yaml
