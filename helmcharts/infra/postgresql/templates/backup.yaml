@@ -16,7 +16,7 @@ spec:
               - pg_dump
               - -Fc
               - -f
-              - /$(date +'%Y-%m-%d').dump
+              - /backups/$(date +'%Y-%m-%d').dump
               - -h 
               - postgres.database.svc.cluster.local
             env:
@@ -30,13 +30,16 @@ spec:
                   secretKeyRef:
                     name: postgres-credentials
                     key: POSTGRES_USER
+            volumeMounts:
+              - name: backup
+                mountPath: /backups
           - name: rclone
             image: rclone/rclone
             imagePullPolicy: IfNotPresent
             args:
               - copy
-              - /$(date +'%Y-%m-%d').dump
-              - gdrive
+              - /backups
+              - gdrive:
               - --config
               - /config/rclone.conf
             volumeMounts:
@@ -44,6 +47,8 @@ spec:
                 mountPath: /config
               - name: service-account
                 mountPath: /data
+              - name: backup
+                mountPath: /backups
           containers:
             - name: done
               image: busybox
@@ -58,3 +63,5 @@ spec:
             - name: service-account
               secret:
                 secretName: rclone-service-account-key
+            - name: backup
+              emptyDir: {}
