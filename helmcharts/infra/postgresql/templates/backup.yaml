@@ -14,7 +14,8 @@ spec:
             imagePullPolicy: IfNotPresent
             command: ["/bin/bash", "-c"]
             args:
-              - pg_dump -Fc -f /backups/$(date +'%Y-%m-%d').dump -h postgres.database.svc.cluster.local
+              - pg_dumpall -f /backups/dump.sql -h postgres.database.svc.cluster.local
+              - tar -czf /backups/$(date +'%Y-%m-%d').tar.gz /backups/dump.sql
             env:
               - name: PGPASSWORD
                 valueFrom:
