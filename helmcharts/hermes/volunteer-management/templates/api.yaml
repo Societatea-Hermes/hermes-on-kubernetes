@@ -32,3 +32,5 @@ spec:
                   key: POSTGRES_PASSWORD
             - name: DB_HOST
               value: postgres.database.svc.cluster.local
+            - name: DB_NAME
+              value: volunteers
