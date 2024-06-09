@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           initContainers:
-          - name: pg_dump
+          - name: pg-dump
             image: postgres:16.3-alpine
             imagePullPolicy: IfNotPresent
             args:

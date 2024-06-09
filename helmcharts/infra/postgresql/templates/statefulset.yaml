@@ -33,11 +33,17 @@ spec:
                   key: POSTGRES_USER
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
-              name: postgredb
+              name: postgresql-db
       volumes:
-        - name: postgredb
+        - name: postgresql-db
           persistentVolumeClaim:
-            claimName: postgres-pv-claim
-            storageClassName: standard
-            capacity:
-              storage: 6Gi
+            claimName: postgresql-db-claim
+  volumeClaimTemplates:
+    - metadata:
+        name: disk-ssd
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: "local-path"
+        resources:
+          requests:
+            storage: 6Gi
