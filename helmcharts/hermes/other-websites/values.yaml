@@ -1,0 +1,11 @@
+cariere:
+  image: 
+    tag: 7
+
+hackathon:
+  image: 
+    tag: 12
+
+ssmi:
+  image: 
+    tag: 5
