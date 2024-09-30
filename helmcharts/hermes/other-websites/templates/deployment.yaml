@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: ghcr.io/societatea-hermes/hermes-old-cariereinit-website:7
+          image: ghcr.io/societatea-hermes/hermes-old-cariereinit-website:{{ .Values.cariere.image.tag }}
           ports:
             - containerPort: 8000
 ---
@@ -42,7 +42,7 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: ghcr.io/societatea-hermes/hermes-old-hackathon-website:12
+          image: ghcr.io/societatea-hermes/hermes-old-hackathon-website:{{ .Values.hackathon.image.tag }}
           ports:
             - containerPort: 8000
 ---
@@ -67,6 +67,6 @@ spec:
     spec:
       containers:
         - name: laravel
-          image: ghcr.io/societatea-hermes/hermes-old-ssmi-website:5
+          image: ghcr.io/societatea-hermes/hermes-old-ssmi-website:{{ .Values.ssmi.image.tag }}
           ports:
             - containerPort: 8000
