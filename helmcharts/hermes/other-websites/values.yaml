@@ -2,9 +2,13 @@ cariere:
   image: 
     tag: 7
 
-hackathon:
+hackathon-old:
   image: 
     tag: 12
+
+hackathon:
+  image:
+    tag: 27
 
 ssmi:
   image: 

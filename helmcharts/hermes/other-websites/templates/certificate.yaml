@@ -24,6 +24,7 @@ spec:
   renewBefore: 360h0m0s # 15d
   dnsNames:
   - "hackathon.societatea-hermes.ro"
+  - "hackathon.dev.societatea-hermes.ro"
   issuerRef:
     name: letsencrypt
     kind: ClusterIssuer

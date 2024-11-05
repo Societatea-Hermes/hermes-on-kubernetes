@@ -58,6 +58,16 @@ spec:
               name: old-hackathon-website
               port:
                 number: 8000
+  - host: "hackathon.dev.societatea-hermes.ro"
+    http:
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: hackathon-website-2024
+              port:
+                number: 80
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

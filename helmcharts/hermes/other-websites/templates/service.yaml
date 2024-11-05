@@ -42,3 +42,18 @@ spec:
       targetPort: 8000
   selector:
     app.kubernetes.io/name: old-ssmi-website
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: production-apps
+  labels:
+    app.kubernetes.io/name: hackathon-website-2024
+  name: hackathon-website-2024
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app.kubernetes.io/name: hackathon-website-2024
