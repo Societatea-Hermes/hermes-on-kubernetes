@@ -2,7 +2,7 @@ cariere:
   image: 
     tag: 7
 
-hackathon-old:
+hackathon_old:
   image: 
     tag: 12
 
