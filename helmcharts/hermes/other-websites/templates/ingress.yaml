@@ -55,9 +55,9 @@ spec:
           pathType: ImplementationSpecific
           backend:
             service:
-              name: old-hackathon-website
+              name: hackathon-website-2024
               port:
-                number: 8000
+                number: 80
   - host: "hackathon.dev.societatea-hermes.ro"
     http:
       paths:

@@ -8,7 +8,7 @@ hackathon_old:
 
 hackathon:
   image:
-    tag: 28
+    tag: 29
 
 ssmi:
   image: 
