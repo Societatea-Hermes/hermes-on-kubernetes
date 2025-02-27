@@ -7,7 +7,6 @@ spec:
   secretName: tls-cariereinit
   renewBefore: 360h0m0s # 15d
   dnsNames:
-  - "cariereinit.ro"
   - "cariereinit.societatea-hermes.ro"
   issuerRef:
     name: letsencrypt
