@@ -1,6 +1,6 @@
 cariere:
   image: 
-    tag: 7
+    tag: 8
 
 hackathon_old:
   image: 
