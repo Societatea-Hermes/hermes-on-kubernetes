@@ -21,6 +21,11 @@ spec:
       valueFiles: 
         - values.yaml
   syncPolicy:
+    # node-exporter reads node metrics from the host network/PID namespace, which Talos's
+    # default "baseline" Pod Security level forbids.
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
     automated:
       prune: true
       selfHeal: true

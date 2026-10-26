@@ -21,6 +21,11 @@ spec:
       valueFiles:
         - values.yaml
   syncPolicy:
+    # Traefik binds :80/:443 on the master's host network, which Talos's
+    # default "baseline" Pod Security level forbids.
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: privileged
     automated:
       prune: true
       selfHeal: true
