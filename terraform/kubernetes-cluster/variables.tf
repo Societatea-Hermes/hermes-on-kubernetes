@@ -13,14 +13,6 @@ variable "talos_version" {
   default     = "v1.13.12"
 }
 
-# Talos Image Factory schematic ID. The default is the vanilla schematic
-# (no system extensions). Generate a custom one at https://factory.talos.dev
-# if you need extensions (e.g. extra storage drivers).
-variable "schematic_id" {
-  description = "Talos Image Factory schematic ID"
-  default     = "376567988ad370138ad8b2698212367b8edcb69b5791d4a237ff6b4d5fb1b5c8"
-}
-
 variable "master_node" {
   type = object({
     size = string
