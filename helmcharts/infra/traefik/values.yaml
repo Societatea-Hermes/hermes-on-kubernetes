@@ -1,0 +1,57 @@
+traefik:
+  # Run as a hostNetwork DaemonSet pinned to the master, which holds the single
+  # public IP — this replaces the old k3s ServiceLB / ingress-nginx exposure.
+  # No Azure LoadBalancer is created.
+  deployment:
+    kind: DaemonSet
+  # hostNetwork means only one pod can occupy a node's :80/:443 at a time, so the
+  # rollout must free the port before starting the replacement.
+  updateStrategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 0
+  hostNetwork: true
+  nodeSelector:
+    type: master
+  tolerations:
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+  # Needed to bind the privileged ports 80/443 as the non-root traefik user.
+  securityContext:
+    capabilities:
+      add:
+        - NET_BIND_SERVICE
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    runAsGroup: 65532
+    runAsNonRoot: true
+    runAsUser: 65532
+  # With hostNetwork the container binds these ports directly on the node.
+  ports:
+    web:
+      port: 80
+      http:
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
+    websecure:
+      port: 443
+  # hostNetwork exposes the ports; no Service/LoadBalancer needed.
+  service:
+    enabled: false
+  ingressClass:
+    enabled: true
+    isDefaultClass: true
+    name: traefik
+  providers:
+    kubernetesIngress:
+      enabled: true
+      allowExternalNameServices: true
+    kubernetesCRD:
+      enabled: true
+      allowCrossNamespace: true

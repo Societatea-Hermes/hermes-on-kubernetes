@@ -1,5 +1,0 @@
-ingress-nginx:
-  controller:
-    extraArgs:
-      enable-ssl-passthrough: ""
-    allowSnippetAnnotations: true

@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: postgres
-          image: postgres:16.3-alpine
+          image: postgres:16.15-alpine
           imagePullPolicy: "IfNotPresent"
           ports:
             - containerPort: 5432
@@ -41,6 +41,7 @@ spec:
         name: postgresql-db
       spec:
         accessModes: [ "ReadWriteOnce" ]
+        storageClassName: local-path
         resources:
           requests:
             storage: 6Gi

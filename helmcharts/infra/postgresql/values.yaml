@@ -1,3 +1,12 @@
+# Nightly pg_dumpall, uploaded to Azure Blob Storage. The account and container
+# are created by terraform/kubernetes-cluster/deploy.sh; keep them in sync.
+backup:
+  schedule: "0 1 * * *"
+  storageAccount: hermestfstate
+  container: postgres-backups
+
+# Restores <date>.sql.gz from the backups container. Enable, let ArgoCD sync,
+# then disable again once the Job has completed.
 restore_backup:
-  enabled: true
+  enabled: false
   date: "2025-06-09"

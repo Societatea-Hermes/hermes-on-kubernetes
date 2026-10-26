@@ -3,20 +3,22 @@ kind: CronJob
 metadata:
   name: postgres-backups
 spec:
-  schedule: "0 1 * * *"
+  schedule: {{ .Values.backup.schedule | quote }}
+  concurrencyPolicy: Forbid
   jobTemplate:
     spec:
+      backoffLimit: 3
       template:
         spec:
           initContainers:
           - name: pg-dump
-            image: postgres:16.3-alpine
+            image: postgres:16.15-alpine
             imagePullPolicy: IfNotPresent
             command: ["/bin/bash", "-c"]
             args:
-              - | 
-                pg_dumpall --clean -f /backups/dump.sql -h postgres.database.svc.cluster.local
-                tar -czf /backups/$(date +'%Y-%m-%d').tar.gz /backups/dump.sql
+              - |
+                set -euo pipefail
+                pg_dumpall --clean -h postgres.database.svc.cluster.local | gzip > /backups/$(date +'%Y-%m-%d').sql.gz
             env:
               - name: PGPASSWORD
                 valueFrom:
@@ -31,35 +33,29 @@ spec:
             volumeMounts:
               - name: backup
                 mountPath: /backups
-          - name: rclone
-            image: rclone/rclone
+          containers:
+          # Logs in as the VMs' managed identity (terraform/kubernetes-cluster/identity.tf),
+          # so no storage keys are needed. Old backups are expired by the storage
+          # account's lifecycle policy (see deploy.sh).
+          - name: upload
+            image: mcr.microsoft.com/azure-cli:2.90.0
             imagePullPolicy: IfNotPresent
+            command: ["/bin/bash", "-c"]
             args:
-              - copy
-              - /backups
-              - "gdrive:"
-              - --config
-              - /config/rclone.conf
+              - |
+                set -euo pipefail
+                az login --identity --allow-no-subscriptions -o none
+                for f in /backups/*.sql.gz; do
+                  az storage blob upload --auth-mode login --overwrite -o none \
+                    --account-name {{ .Values.backup.storageAccount }} \
+                    --container-name {{ .Values.backup.container }} \
+                    --file "$f" --name "$(basename "$f")"
+                  echo "Uploaded $(basename "$f")"
+                done
             volumeMounts:
-              - name: rclone-config
-                mountPath: /config
-              - name: service-account
-                mountPath: /data
               - name: backup
                 mountPath: /backups
-          containers:
-            - name: done
-              image: busybox
-              imagePullPolicy: IfNotPresent
-              command: ["echo"]
-              args: ["Backup completed - $(date +'%Y-%m-%d')"]
           restartPolicy: OnFailure
           volumes:
-            - name: rclone-config
-              configMap:
-                name: rclone-config
-            - name: service-account
-              secret:
-                secretName: rclone-service-account-key
             - name: backup
               emptyDir: {}

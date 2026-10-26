@@ -1,41 +1,50 @@
-apiVersion: argoproj.io/v1alpha1
-kind: AppProject
-metadata:
-  name: production-apps
-  namespace: argocd
-spec:
-  sourceRepos:
-  - '*'
-  destinations:
-  - namespace: 'production-apps'
-    server: '*'
-  clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
-  roles:
-  - name: project-admin
-    policies:
-      - p, proj:production-apps:project-admin, applications, *, production-apps/*, allow
-    groups:
-      - developers@societatea-hermes.ro
+# Created before everything else (lowest sync wave) so the Applications that
+# reference them can sync. master-app itself stays in `default`, since it's
+# what creates these.
 ---
+# Cluster components. Only admins (role:admin in argocd-rbac-cm) can change them.
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: development-apps
+  name: infra
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10000"
 spec:
+  description: Cluster infrastructure (ArgoCD, ingress, certificates, monitoring, storage, database)
   sourceRepos:
-  - '*'
+    - https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+    - git@github.com:Societatea-Hermes/hermes-on-kubernetes-secrets.git
   destinations:
-  - namespace: 'development-apps'
-    server: '*'
+    - namespace: "*"
+      server: https://kubernetes.default.svc
   clusterResourceWhitelist:
-  - group: '*'
-    kind: '*'
+    - group: "*"
+      kind: "*"
+---
+# Hermes' own websites and apps, all in the `apps` namespace. The developers@
+# group can manage these Applications.
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: apps
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10000"
+spec:
+  description: Hermes websites and apps
+  sourceRepos:
+    - https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
+  destinations:
+    - namespace: apps
+      server: https://kubernetes.default.svc
+  # Apps may only create the `apps` namespace itself, nothing else cluster-wide.
+  clusterResourceWhitelist:
+    - group: ""
+      kind: Namespace
   roles:
-  - name: project-admin
-    policies:
-      - p, proj:development-apps:project-admin, applications, *, development-apps/*, allow
-    groups:
-      - developers@societatea-hermes.ro
+    - name: project-admin
+      policies:
+        - p, proj:apps:project-admin, applications, *, apps/*, allow
+      groups:
+        - developers@societatea-hermes.ro

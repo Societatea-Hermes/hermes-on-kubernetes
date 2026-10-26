@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: old-cariereinit-website
-  namespace: production-apps
   labels:
     app.kubernetes.io/name: old-cariereinit-website
 spec:
@@ -25,7 +24,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: old-hackathon-website
-  namespace: production-apps
   labels:
     app.kubernetes.io/name: old-hackathon-website
 spec:
@@ -50,7 +48,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: old-ssmi-website
-  namespace: production-apps
   labels:
     app.kubernetes.io/name: old-ssmi-website
 spec:
@@ -75,7 +72,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hackathon-website-2024
-  namespace: production-apps
   labels:
     app.kubernetes.io/name: hackathon-website-2024
 spec:

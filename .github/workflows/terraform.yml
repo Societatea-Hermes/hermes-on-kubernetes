@@ -1,0 +1,141 @@
+name: Terraform
+
+# - Pull requests: fmt + validate only. No Azure credentials, so a branch can
+#   never touch the real infrastructure.
+# - Push to main: `deploy.sh plan` (shown in the run summary), then
+#   `deploy.sh apply` once someone approves the `production` environment. If
+#   the plan has no changes, the apply job is skipped and nobody is asked.
+#
+# One-time setup (Azure identity, environments, variables, secret): run
+# terraform/kubernetes-cluster/bootstrap.sh once.
+
+on:
+  pull_request:
+    paths:
+      - "terraform/**"
+      # Inlined into the master's Talos config, so changing it replaces the VM.
+      - "helmcharts/infra/argocd/base/master-app.yaml"
+      - ".github/workflows/terraform.yml"
+  push:
+    branches: [main]
+    paths:
+      - "terraform/**"
+      - "helmcharts/infra/argocd/base/master-app.yaml"
+      - ".github/workflows/terraform.yml"
+  workflow_dispatch:
+
+# Only one plan/apply against the real infrastructure at a time, and never
+# cancel one halfway. Pull request checks just replace older runs of the same PR.
+concurrency:
+  group: ${{ github.event_name == 'pull_request' && format('terraform-pr-{0}', github.ref) || 'terraform' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  TF_VERSION: "1.16.1"
+  TF_IN_AUTOMATION: "true"
+  TF_INPUT: "false"
+  # Terraform and `az` (via azure/login) log in to Azure with GitHub's OIDC
+  # token (federated credential on the hermes-github-actions identity, see
+  # bootstrap.sh). No Azure secrets.
+  ARM_USE_OIDC: "true"
+  ARM_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
+  ARM_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
+  ARM_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+defaults:
+  run:
+    working-directory: terraform/kubernetes-cluster
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+      - name: terraform fmt
+        run: terraform fmt -check -diff -recursive
+      - name: terraform validate
+        run: |
+          terraform init -backend=false
+          terraform validate
+
+  plan:
+    needs: validate
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    # No reviewers, but restricted to `main`; holds the TF_VAR_* secrets.
+    environment: terraform-plan
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      changes: ${{ steps.plan.outputs.changes }}
+    env:
+      TF_VAR_github_ssh_key: ${{ secrets.TF_VAR_GITHUB_SSH_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+      - uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      - name: deploy.sh plan
+        id: plan
+        run: |
+          set +e
+          ./deploy.sh plan -lock-timeout=10m -detailed-exitcode -out=tfplan
+          code=$?
+          set -e
+          # -detailed-exitcode: 0 = no changes, 1 = error, 2 = changes
+          if [ "$code" -eq 1 ]; then exit 1; fi
+          echo "changes=$([ "$code" -eq 2 ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      - name: Write plan to the run summary
+        run: |
+          {
+            echo "## Terraform plan"
+            echo
+            echo "Approve the \`production\` deployment below to apply it."
+            echo
+            echo '```'
+            terraform show -no-color tfplan | head -c 900000
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+  apply:
+    needs: plan
+    if: needs.plan.outputs.changes == 'true'
+    runs-on: ubuntu-latest
+    # Required reviewers: the run waits here until someone approves.
+    environment: production
+    permissions:
+      contents: read
+      id-token: write
+    env:
+      TF_VAR_github_ssh_key: ${{ secrets.TF_VAR_GITHUB_SSH_KEY }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v4
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+          terraform_wrapper: false
+      - uses: azure/login@v3
+        with:
+          client-id: ${{ vars.AZURE_CLIENT_ID }}
+          tenant-id: ${{ vars.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+      # The plan file holds secrets and this repo is public, so it isn't passed
+      # between jobs as an artifact. The concurrency group keeps anything else
+      # from changing the state in between, so this re-plans exactly what was
+      # approved, then applies it.
+      - name: deploy.sh apply
+        run: ./deploy.sh apply -lock-timeout=10m -auto-approve

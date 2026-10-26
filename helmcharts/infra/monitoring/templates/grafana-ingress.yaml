@@ -4,27 +4,13 @@ metadata:
   name: monitoring
   namespace: monitoring
   annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
-    nginx.ingress.kubernetes.io/auth-url: "https://auth.societatea-hermes.ro/oauth2/auth?allowed_groups=sa@societatea-hermes.ro,developers@societatea-hermes.ro"
-    nginx.ingress.kubernetes.io/auth-signin: "https://auth.societatea-hermes.ro/oauth2/start?rd=https://$host$request_uri"
-    nginx.ingress.kubernetes.io/configuration-snippet: |
-      auth_request_set $groups $upstream_http_x_auth_request_groups;
-      auth_request_set $email $upstream_http_x_auth_request_email;
-
-      proxy_set_header  X-Auth-Request-Groups $groups;
-      proxy_set_header  X-Auth-Request-Email $email;
-
-      access_by_lua_block {
-        local role = ""
-        if string.find(ngx.var.groups, "sa@societatea%-hermes%.ro") then
-          role = "Admin"
-        else
-          role = "Editor"
-        end
-        ngx.req.set_header("X-Auth-Request-Role", role)
-      }
+    # Group-gated via oauth2-proxy; the X-Auth-Request-* headers it sets feed
+    # Grafana's auth.proxy. NOTE: the old nginx snippet also computed
+    # X-Auth-Request-Role from the user's groups — that logic is gone, so users
+    # may land with Grafana's default role until role mapping is reintroduced.
+    traefik.ingress.kubernetes.io/router.middlewares: oauth2-proxy-forward-auth-signin@kubernetescrd,oauth2-proxy-forward-auth-staff@kubernetescrd
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
     - secretName: grafana-tls
   rules:

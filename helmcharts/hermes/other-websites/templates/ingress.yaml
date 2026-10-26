@@ -2,11 +2,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: cariereinit-ingress
-  namespace: production-apps
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - secretName: tls-cariereinit
     hosts:
@@ -27,11 +24,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: hackathon-ingress
-  namespace: production-apps
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - secretName: tls-hackathon
     hosts:
@@ -62,11 +56,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ssmi-ingress
-  namespace: production-apps
-  annotations:
-    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 spec:
-  ingressClassName: nginx
+  ingressClassName: traefik
   tls:
   - secretName: tls-ssmi
     hosts:

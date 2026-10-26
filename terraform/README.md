@@ -1,1 +1,1 @@
-This folder contains terraform scripts for deploying the Kubernetes Hermes infrastructure and the Vaultwarden password manager. We currently only support Azure for the Kubernetes setup, and GCP for the password manager, but these files can be used as a reference when moving to other cloud providers.
+This folder contains terraform scripts for deploying the Kubernetes Hermes infrastructure. We currently only support Azure, but these files can be used as a reference when moving to other cloud providers.

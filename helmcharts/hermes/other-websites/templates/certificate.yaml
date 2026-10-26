@@ -2,7 +2,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: cariereinit-certificate
-  namespace: production-apps
 spec:
   secretName: tls-cariereinit
   renewBefore: 360h0m0s # 15d
@@ -17,7 +16,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: hackathon-certificate
-  namespace: production-apps
 spec:
   secretName: tls-hackathon
   renewBefore: 360h0m0s # 15d
@@ -33,7 +31,6 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: ssmi-certificate
-  namespace: production-apps
 spec:
   secretName: tls-ssmi
   renewBefore: 360h0m0s # 15d

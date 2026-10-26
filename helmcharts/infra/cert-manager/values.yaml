@@ -1,2 +1,7 @@
 cert-manager:
-  installCRDs: true
+  crds:
+    # Install and upgrade cert-manager's CRDs with the chart...
+    enabled: true
+    # ...but keep them if the chart is ever uninstalled, so existing
+    # Certificates (and their secrets) aren't deleted with it.
+    keep: true

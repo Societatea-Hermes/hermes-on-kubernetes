@@ -1,14 +1,18 @@
-monitoring:
+# Platform components
+local_path_provisioner:
   enabled: true
-ingress_nginx:
+metrics_server:
+  enabled: true
+traefik:
+  enabled: true
+# Infra
+monitoring:
   enabled: true
 cert_manager:
   enabled: true
-argocd_ingress:
-  enabled: true
 oauth2_proxy:
   enabled: true
-ddns:
+argocd_ingress:
   enabled: true
 postgres:
   enabled: true

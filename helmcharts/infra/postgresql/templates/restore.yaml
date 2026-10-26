@@ -7,30 +7,31 @@ spec:
   template:
     spec:
       initContainers:
-        - name: rclone
-          image: rclone/rclone
-          imagePullPolicy: IfNotPresent
-          args:
-            - copy
-            - "gdrive:{{ .Values.restore_backup.date }}.tar.gz"
-            - /backups
-            - --config
-            - /config/rclone.conf
-          volumeMounts:
-            - name: rclone-config
-              mountPath: /config
-            - name: service-account
-              mountPath: /data
-            - name: backup
-              mountPath: /backups
-        - name: pg-restore
-          image: postgres:16.3-alpine
+        - name: download
+          image: mcr.microsoft.com/azure-cli:2.90.0
           imagePullPolicy: IfNotPresent
           command: ["/bin/bash", "-c"]
           args:
             - |
-              tar -xzvf /backups/{{ .Values.restore_backup.date }}.tar.gz -C /backups
-              psql -h postgres.database.svc.cluster.local -f /backups/backups/dump.sql
+              set -euo pipefail
+              az login --identity --allow-no-subscriptions -o none
+              az storage blob download --auth-mode login -o none \
+                --account-name {{ .Values.backup.storageAccount }} \
+                --container-name {{ .Values.backup.container }} \
+                --name {{ .Values.restore_backup.date }}.sql.gz \
+                --file /backups/dump.sql.gz
+          volumeMounts:
+            - name: backup
+              mountPath: /backups
+      containers:
+        - name: pg-restore
+          image: postgres:16.15-alpine
+          imagePullPolicy: IfNotPresent
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              set -euo pipefail
+              gunzip -c /backups/dump.sql.gz | psql -h postgres.database.svc.cluster.local -d postgres
           env:
             - name: PGPASSWORD
               valueFrom:
@@ -45,20 +46,8 @@ spec:
           volumeMounts:
             - name: backup
               mountPath: /backups
-      containers:
-        - name: done
-          image: busybox
-          imagePullPolicy: IfNotPresent
-          command: ["echo"]
-          args: ["Restore completed"]
       restartPolicy: OnFailure
       volumes:
-        - name: rclone-config
-          configMap:
-            name: rclone-config
-        - name: service-account
-          secret:
-            secretName: rclone-service-account-key
         - name: backup
           emptyDir: {}
 {{- end }}

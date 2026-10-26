@@ -10,9 +10,9 @@ metadata:
     argocd.argoproj.io/sync-wave: "-99"
 spec:
   destination:
-    namespace: default
+    namespace: cert-manager
     server: https://kubernetes.default.svc
-  project: default #infra
+  project: infra
   source:
     repoURL: https://github.com/Societatea-Hermes/hermes-on-kubernetes.git
     targetRevision: main

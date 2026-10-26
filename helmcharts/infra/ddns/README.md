@@ -1,1 +1,0 @@
-This helmchart deploys a ddclient container that's used to automatically configure DNS. 

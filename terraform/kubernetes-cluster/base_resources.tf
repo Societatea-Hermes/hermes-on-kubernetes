@@ -20,66 +20,69 @@ resource "azurerm_subnet" "default" {
   address_prefixes     = ["10.0.1.0/24"]
 }
 
-resource azurerm_network_security_group "default" {
+resource "azurerm_network_security_group" "default" {
   name                = "hermes-on-kubernetes-nsg"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
-  
 
- 
-  security_rule = [ {
-    name = "allow_80_443"
-    description = "Allow inbound traffic on port 80 and 443"
-    priority = 1002
-    direction = "Inbound"
-    access = "Allow"
-    protocol = "Tcp"
-    source_port_range = "*"
-    destination_port_ranges = [80, 443]
-    source_address_prefix = "*"
-    destination_address_prefix = "*"
-    destination_address_prefixes          = null
-    source_application_security_group_ids = null
+
+
+  security_rule = [{
+    name                                       = "allow_80_443"
+    description                                = "Allow inbound traffic on port 80 and 443"
+    priority                                   = 1002
+    direction                                  = "Inbound"
+    access                                     = "Allow"
+    protocol                                   = "Tcp"
+    source_port_range                          = "*"
+    destination_port_ranges                    = [80, 443]
+    source_address_prefix                      = "*"
+    destination_address_prefix                 = "*"
+    destination_address_prefixes               = null
+    source_application_security_group_ids      = null
     destination_application_security_group_ids = null
-    source_port_ranges                    = null
-    destination_port_range = null
-    source_address_prefixes = null
-  },
-  {
-    name                       = "allow_ssh_all"
-    description = "Allow SSH traffic from all sources"
-    priority                   = 1001
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-    destination_address_prefixes          = null
-    source_application_security_group_ids = null
-    destination_application_security_group_ids = null
-    source_port_ranges                    = null
-    destination_port_ranges = null
-    source_address_prefixes = null
-  },
-  {
-    name = "allow_internode_traffic"
-    description = "Allow traffic between nodes in the cluster"
-    priority = 1003
-    direction = "Inbound"
-    access = "Allow"
-    protocol = "*"
-    source_port_range = "*"
-    destination_port_range = "*"
-    source_address_prefix = azurerm_virtual_network.default.address_space[0]
-    destination_address_prefix = azurerm_virtual_network.default.address_space[0]
-    destination_address_prefixes          = null
-    source_application_security_group_ids = null
-    destination_application_security_group_ids = null
-    source_port_ranges                    = null
-    destination_port_ranges = null
-    source_address_prefixes = null
+    source_port_ranges                         = null
+    destination_port_range                     = null
+    source_address_prefixes                    = null
+    },
+    {
+      # Talos has no SSH. Management is over the Talos API (50000) and the
+      # Kubernetes API (6443). Consider narrowing source_address_prefix to your
+      # operator/office IP instead of "*".
+      name                                       = "allow_talos_k8s_api"
+      description                                = "Allow Talos API (50000) and Kubernetes API (6443)"
+      priority                                   = 1001
+      direction                                  = "Inbound"
+      access                                     = "Allow"
+      protocol                                   = "Tcp"
+      source_port_range                          = "*"
+      destination_port_range                     = null
+      destination_port_ranges                    = [50000, 6443]
+      source_address_prefix                      = "*"
+      destination_address_prefix                 = "*"
+      destination_address_prefixes               = null
+      source_application_security_group_ids      = null
+      destination_application_security_group_ids = null
+      source_port_ranges                         = null
+      source_address_prefixes                    = null
+    },
+    {
+      name                                       = "allow_internode_traffic"
+      description                                = "Allow traffic between nodes in the cluster"
+      priority                                   = 1003
+      direction                                  = "Inbound"
+      access                                     = "Allow"
+      protocol                                   = "*"
+      source_port_range                          = "*"
+      destination_port_range                     = "*"
+      source_address_prefix                      = one(azurerm_virtual_network.default.address_space)
+      destination_address_prefix                 = one(azurerm_virtual_network.default.address_space)
+      destination_address_prefixes               = null
+      source_application_security_group_ids      = null
+      destination_application_security_group_ids = null
+      source_port_ranges                         = null
+      destination_port_ranges                    = null
+      source_address_prefixes                    = null
 
   }]
 }
@@ -87,11 +90,4 @@ resource azurerm_network_security_group "default" {
 resource "azurerm_subnet_network_security_group_association" "name" {
   subnet_id                 = azurerm_subnet.default.id
   network_security_group_id = azurerm_network_security_group.default.id
-}
-
-# Token used by the nodes to join the cluster.
-resource "random_string" "k3s_token" {
-  length = 64
-  special = false
-  upper = false
 }

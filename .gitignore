@@ -1,6 +1,9 @@
 # Local .terraform directories
 **/.terraform/*
 
+# Talos VHD downloaded by talos-image.tf (1-2 GB)
+**/.talos/
+
 # .tfstate files
 *.tfstate
 *.tfstate.*
@@ -36,5 +39,5 @@ override.tf.json
 .terraformrc
 terraform.rc
 
-# You wouldn't normally ignore this file, but it may cause unnecessary confusion.
-.terraform.lock.hcl
+# .terraform.lock.hcl is committed on purpose: it pins the exact provider
+# versions, so CI and everyone's laptop run the same ones.
