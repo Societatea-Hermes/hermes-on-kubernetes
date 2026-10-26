@@ -15,13 +15,13 @@
 #   ./deploy.sh apply -auto-approve
 #
 # Names must match the backend block in providers.tf. Storage account names are
-# GLOBALLY unique — override with e.g. SA=hermestfstate2 ./deploy.sh if taken.
+# GLOBALLY unique — override with e.g. SA=hermesk8stfstate2 ./deploy.sh if taken.
 set -euo pipefail
 cd "$(dirname "$0")"
 
 LOCATION="${LOCATION:-centralindia}"
 RG="${RG:-hermes-tfstate}"
-SA="${SA:-hermestfstate}"
+SA="${SA:-hermesk8stfstate}"
 CONTAINER="${CONTAINER:-tfstate}"
 BACKUP_CONTAINER="${BACKUP_CONTAINER:-postgres-backups}"
 BACKUP_RETENTION_DAYS="${BACKUP_RETENTION_DAYS:-30}"

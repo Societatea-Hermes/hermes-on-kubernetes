@@ -79,7 +79,7 @@ variable "backup_resource_group" {
 
 variable "backup_storage_account" {
   description = "Storage account holding the backups"
-  default     = "hermestfstate"
+  default     = "hermesk8stfstate"
 }
 
 variable "backup_container" {

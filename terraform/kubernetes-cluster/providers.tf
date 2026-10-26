@@ -6,7 +6,7 @@ terraform {
   # init+apply in one step. Auth is via your `az login` identity (no shared keys).
   backend "azurerm" {
     resource_group_name  = "hermes-tfstate"
-    storage_account_name = "hermestfstate"
+    storage_account_name = "hermesk8stfstate"
     container_name       = "tfstate"
     key                  = "kubernetes-cluster.tfstate"
     use_azuread_auth     = true

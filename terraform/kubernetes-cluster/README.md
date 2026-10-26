@@ -26,13 +26,13 @@ You only need these to look at the cluster or to run `deploy.sh` yourself:
 `deploy.sh` works from a laptop too: `az login`, set `TF_VAR_github_ssh_key` to ArgoCD's deploy key, then `./deploy.sh plan` or `./deploy.sh`. Prefer CI, so every change is reviewed and logged.
 
 ## Remote state
-State is stored remotely in **Azure Blob Storage**, via the `backend "azurerm"` block in `providers.tf`. `deploy.sh` creates the storage account in its own `hermes-tfstate` resource group (separate from the cluster's, with blob versioning + soft delete), and Terraform authenticates with Azure AD (`use_azuread_auth`, no shared keys). Storage account names are globally unique: if `hermestfstate` is taken, change it in `providers.tf`, `deploy.sh` (`SA`) and `helmcharts/infra/postgresql/values.yaml`.
+State is stored remotely in **Azure Blob Storage**, via the `backend "azurerm"` block in `providers.tf`. `deploy.sh` creates the storage account in its own `hermes-tfstate` resource group (separate from the cluster's, with blob versioning + soft delete), and Terraform authenticates with Azure AD (`use_azuread_auth`, no shared keys). Storage account names are globally unique: if `hermesk8stfstate` is taken, change it in `providers.tf`, `deploy.sh` (`SA`) and `helmcharts/infra/postgresql/values.yaml`.
 
 # Accessing the cluster
 
 ```sh
 az login
-terraform init      # needs "Storage Blob Data Contributor" on hermestfstate; running ./deploy.sh plan once grants it
+terraform init      # needs "Storage Blob Data Contributor" on hermesk8stfstate; running ./deploy.sh plan once grants it
 terraform output -raw kubeconfig  > kubeconfig
 terraform output -raw talosconfig > talosconfig
 

@@ -21,5 +21,5 @@ kubectl -n database create job --from=cronjob/postgres-backups manual-backup
 
 List the available backups with:
 ```sh
-az storage blob list --auth-mode login --account-name hermestfstate -c postgres-backups --query "[].name" -o tsv
+az storage blob list --auth-mode login --account-name hermesk8stfstate -c postgres-backups --query "[].name" -o tsv
 ```
