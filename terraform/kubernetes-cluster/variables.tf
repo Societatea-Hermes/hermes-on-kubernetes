@@ -6,7 +6,7 @@ variable "location" {
 # Talos Linux version to deploy. Must be a real released version, because the
 # Image Factory VHD and the machine config schema are both pinned to it.
 # Check https://github.com/siderolabs/talos/releases and bump as needed. Must be
-# >= v1.12 (UserVolumeConfig with volumeType disk) and supported by the pinned
+# >= v1.10 (UserVolumeConfig) and supported by the pinned
 # siderolabs/talos provider (0.11.x knows Talos up to v1.13).
 variable "talos_version" {
   description = "Talos Linux version (e.g. v1.13.12)"

@@ -83,15 +83,17 @@ locals {
     }
   }
 
-  # The OS disk is the system disk, so the only other disk is the data disk.
-  # (B-series v2 VMs have no temporary disk; re-check this if you change size.)
+  # A partition filling the one disk that isn't the OS disk (the data disk),
+  # growing with it if the disk is ever resized. Don't use `volumeType: disk`:
+  # in Talos 1.13 it can't evaluate `system_disk` and the volume never mounts.
   local_path_volume = {
     apiVersion = "v1alpha1"
     kind       = "UserVolumeConfig"
     name       = "local-path-provisioner"
-    volumeType = "disk"
     provisioning = {
       diskSelector = { match = "!system_disk" }
+      minSize      = "10GiB"
+      grow         = true
     }
   }
 

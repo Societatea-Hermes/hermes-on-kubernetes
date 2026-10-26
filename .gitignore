@@ -1,6 +1,10 @@
 # Local .terraform directories
 **/.terraform/*
 
+# Cluster admin credentials (terraform output -raw kubeconfig / talosconfig)
+kubeconfig
+talosconfig
+
 # .tfstate files
 *.tfstate
 *.tfstate.*

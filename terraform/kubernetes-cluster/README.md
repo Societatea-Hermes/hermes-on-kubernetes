@@ -29,16 +29,30 @@ You only need these to look at the cluster or to run `deploy.sh` yourself:
 State is stored remotely in **Azure Blob Storage**, via the `backend "azurerm"` block in `providers.tf`. `deploy.sh` creates the storage account in its own `hermes-tfstate` resource group (separate from the cluster's, with blob versioning + soft delete), and Terraform authenticates with Azure AD (`use_azuread_auth`, no shared keys). Storage account names are globally unique: if `hermesk8stfstate` is taken, change it in `providers.tf`, `deploy.sh` (`SA`) and `helmcharts/infra/postgresql/values.yaml`.
 
 # Accessing the cluster
+For apps, you usually don't need any of this: use the ArgoCD UI at https://argocd.societatea-hermes.ro (Google login).
+
+The kubeconfig and talosconfig are stored in the Terraform state. From this folder:
 
 ```sh
 az login
-terraform init      # needs "Storage Blob Data Contributor" on hermesk8stfstate; running ./deploy.sh plan once grants it
+
+# One-time per person: allow yourself to read the state. Being an Owner of the
+# subscription doesn't include reading blob data. Takes a minute or two to apply;
+# if `terraform init` returns 403, wait and retry.
+az role assignment create --role "Storage Blob Data Reader" \
+  --assignee "$(az ad signed-in-user show --query id -o tsv)" \
+  --scope "$(az group show -n hermes-tfstate --query id -o tsv)"
+
+terraform init
 terraform output -raw kubeconfig  > kubeconfig
 terraform output -raw talosconfig > talosconfig
 
-KUBECONFIG=kubeconfig kubectl get nodes
+export KUBECONFIG=$PWD/kubeconfig
+kubectl get nodes
 talosctl --talosconfig talosconfig -n <public_ip> -e <public_ip> dashboard
 ```
+
+Both files give full admin access to the cluster, and its API is reachable from the internet. Never commit or share them (`.gitignore` excludes them by name), and delete them when you're done.
 
 There is no SSH — use `talosctl` (`dashboard`, `logs`, `dmesg`, `health`) to debug nodes. Run `k9s` locally against the kubeconfig.
 
