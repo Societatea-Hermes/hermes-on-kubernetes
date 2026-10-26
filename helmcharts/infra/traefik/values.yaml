@@ -41,6 +41,13 @@ traefik:
     kubernetesIngress:
       enabled: true
       allowExternalNameServices: true
+      # What Traefik writes into each Ingress's status (the ADDRESS column).
+      # Normally taken from its Service, but there is none here. ArgoCD keeps
+      # an Ingress "Progressing" until this is set.
+      # The master's static public IP (`terraform output public_ip`). It only
+      # changes if the cluster is rebuilt; update it here and in DNS then.
+      ingressEndpoint:
+        ip: 57.159.25.215
     kubernetesCRD:
       enabled: true
       allowCrossNamespace: true
