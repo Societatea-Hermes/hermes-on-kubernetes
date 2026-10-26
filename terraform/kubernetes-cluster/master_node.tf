@@ -58,7 +58,7 @@ resource "azurerm_linux_virtual_machine" "hermes-master-node" {
 
   zone = 1
 
-  source_image_id = azurerm_image.talos.id
+  source_image_id = azurerm_shared_image_version.talos.id
 
   # Talos reads its machine config from custom_data on Azure. No startup script.
   custom_data = base64encode(data.talos_machine_configuration.controlplane.machine_configuration)

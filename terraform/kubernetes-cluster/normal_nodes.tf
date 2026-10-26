@@ -44,7 +44,7 @@ resource "azurerm_linux_virtual_machine" "hermes-normal-nodes" {
 
   zone = 1
 
-  source_image_id = azurerm_image.talos.id
+  source_image_id = azurerm_shared_image_version.talos.id
 
   # Talos reads its machine config from custom_data on Azure. No startup script.
   # Node 0 is the storage worker: it gets the data disk from storage.tf.
