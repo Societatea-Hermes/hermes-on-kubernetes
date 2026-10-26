@@ -41,8 +41,10 @@ spec:
       - X-Auth-Request-Groups
       - X-Auth-Request-Preferred-Username
 ---
-# On a 401 from forward-auth, serve oauth2-proxy's sign_in (which, with
-# --skip-provider-button, redirects straight to Google) instead of a bare 401.
+# On a 401 from forward-auth, answer with oauth2-proxy's sign_in response
+# instead: with --skip-provider-button that's a redirect to Google. Traefik
+# keeps the sign_in response's headers (Location, the CSRF cookie) but forces
+# the original status, so turn the 401 into a 302 or browsers won't follow it.
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
@@ -52,6 +54,8 @@ spec:
   errors:
     status:
       - "401"
+    statusRewrites:
+      "401": 302
     service:
       name: oauth2-proxy
       port: 4180
