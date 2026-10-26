@@ -5,9 +5,10 @@
 #      VM boots from. (A plain managed image can't be used: Azure treats those
 #      as x64 only, and our VMs are ARM64.)
 #
-# Requires `curl` and `xz` on the machine running `terraform apply`. The VHD is
-# ~1-2 GB and is re-downloaded/re-uploaded whenever `talos_version` or the
-# schematic changes.
+# Steps 1 and 2 run in one go on the machine running `terraform apply` (needs
+# `curl`, `xz` and a logged-in `az`), whenever `talos_version` or the schematic
+# changes. They can't be split: CI runners start with an empty disk, so a file
+# downloaded in one run isn't there in the next.
 
 # The Image Factory builds images from a "schematic": the list of system
 # extensions to bake in. None for now; add them under `customization` (see
@@ -28,24 +29,7 @@ locals {
   # e.g. talos-v1.13.12-376567988ad3-arm64: changes with the version or schematic.
   talos_image_name = "talos-${var.talos_version}-${substr(talos_image_factory_schematic.this.id, 0, 12)}-arm64"
   talos_vhd_url    = data.talos_image_factory_urls.azure.urls.disk_image
-  talos_vhd_path   = "${path.module}/.talos/${local.talos_image_name}.vhd"
-}
-
-# Download + decompress the Image Factory VHD locally (idempotent: skips if present).
-resource "terraform_data" "talos_vhd_download" {
-  triggers_replace = [local.talos_vhd_url]
-
-  provisioner "local-exec" {
-    interpreter = ["/bin/bash", "-c"]
-    command     = <<-EOT
-      set -euo pipefail
-      mkdir -p "${path.module}/.talos"
-      if [ ! -f "${local.talos_vhd_path}" ]; then
-        curl -fL "${local.talos_vhd_url}" -o "${local.talos_vhd_path}.xz"
-        xz -d -f "${local.talos_vhd_path}.xz"
-      fi
-    EOT
-  }
+  talos_blob_url   = "${azurerm_storage_account.talos_images.primary_blob_endpoint}${azurerm_storage_container.talos_images.name}/${local.talos_image_name}.vhd"
 }
 
 # Globally-unique suffix for the storage account name.
@@ -69,13 +53,33 @@ resource "azurerm_storage_container" "talos_images" {
   container_access_type = "private"
 }
 
-resource "azurerm_storage_blob" "talos_vhd" {
-  name                 = "${local.talos_image_name}.vhd"
-  storage_container_id = azurerm_storage_container.talos_images.id
-  type                 = "Page"
-  source               = local.talos_vhd_path
+# Download the VHD from the Image Factory, decompress it (xz keeps it sparse:
+# ~9 GiB virtual, a few hundred MB on disk) and upload it as a page blob. Runs
+# again if the image or the container changes.
+resource "terraform_data" "talos_vhd" {
+  triggers_replace = [
+    local.talos_vhd_url,
+    local.talos_image_name,
+    azurerm_storage_container.talos_images.id,
+  ]
 
-  depends_on = [terraform_data.talos_vhd_download]
+  provisioner "local-exec" {
+    interpreter = ["/bin/bash", "-c"]
+    command     = <<-EOT
+      set -euo pipefail
+      tmp="$(mktemp -d)"
+      trap 'rm -rf "$tmp"' EXIT
+      curl -fsSL "${local.talos_vhd_url}" -o "$tmp/talos.vhd.xz"
+      xz -d "$tmp/talos.vhd.xz"
+      # --auth-mode key: az fetches the account key with the caller's
+      # (Contributor) rights; no data-plane role needed on this account.
+      az storage blob upload --auth-mode key --overwrite -o none \
+        --account-name "${azurerm_storage_account.talos_images.name}" \
+        --container-name "${azurerm_storage_container.talos_images.name}" \
+        --name "${local.talos_image_name}.vhd" \
+        --type page --file "$tmp/talos.vhd"
+    EOT
+  }
 }
 
 resource "azurerm_shared_image_gallery" "talos" {
@@ -109,12 +113,19 @@ resource "azurerm_shared_image_version" "talos" {
   image_name          = azurerm_shared_image.talos.name
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
-  blob_uri            = azurerm_storage_blob.talos_vhd.url
+  blob_uri            = local.talos_blob_url
   storage_account_id  = azurerm_storage_account.talos_images.id
 
   target_region {
     name                   = azurerm_resource_group.default.location
     regional_replica_count = 1
     storage_account_type   = "Standard_LRS"
+  }
+
+  depends_on = [terraform_data.talos_vhd]
+
+  # Rebuild the version whenever the blob is re-uploaded.
+  lifecycle {
+    replace_triggered_by = [terraform_data.talos_vhd]
   }
 }

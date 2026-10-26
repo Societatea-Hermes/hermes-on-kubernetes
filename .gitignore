@@ -1,9 +1,6 @@
 # Local .terraform directories
 **/.terraform/*
 
-# Talos VHD downloaded by talos-image.tf (1-2 GB)
-**/.talos/
-
 # .tfstate files
 *.tfstate
 *.tfstate.*
